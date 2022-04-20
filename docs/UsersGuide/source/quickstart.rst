@@ -4,58 +4,72 @@
 Workflow Quick Start
 ====================
 
+This Quick Start Guide will help users to build and run the "out-of-the-box" case for the Unified Forecast System (:term:`UFS`) `Medium-Range Weather (MRW) Application <https://github.com/ufs-community/ufs-mrweather-app>`__ on preconfigured (`Level 1 <https://github.com/ufs-community/ufs/wiki/Supported-Platforms-and-Compilers>`__) machines. For other machines, please refer to :numref:`Chapter %s <config_new_platform>` before using the Quick Start Guide.
 
-The following quick start guide is applicable to versions of the `MR Weather App
-<https://github.com/ufs-community/ufs-mrweather-app>`_ that are on preconfigured machines as listed
-`here <https://github.com/ufs-community/ufs/wiki/Supported-Platforms-and-Compilers>`_. For other machines, please refer to :numref:`Chapter %s <config_new_platform>` before using the quick start guide.
+Procedure for running a case of the MRW App:
 
+#. Download the MRW App
+#. Create a case: use ``create_newcase``
+#. Setup  a case: use ``case.setup``
+#. Build  a case: use ``case.build``
+#. Run    a case: use ``case.submit``
 
-The workflow for building and running the App is built on the CIME
-(Common Infrastructure for Modeling Earth) framework.  Please refer to
-the `CIME Porting Documentation <http://esmci.github.io/cime/versions/ufs_release_v1.1/html/users_guide/porting-cime.html>`_
-if CIME has not yet been ported to the target machine.
+.. _prerequisites:
 
-If you are new to CIME, please consider reading the `CIME Case Control System Part 1: Basic Usage
+Prerequisites for Running the MRW App
+=========================================
+
+* `Git <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git>`__ (v1.8 or greater)
+* `CIME <http://esmci.github.io/cime/versions/ufs_release_v1.1/html/users_guide/porting-cime.html>`__
+
+The MRW App workflow is built on the CIME (Common Infrastructure for Modeling Earth) framework. Please refer to the `CIME Porting Documentation <http://esmci.github.io/cime/versions/ufs_release_v1.1/html/users_guide/porting-cime.html>`__ if CIME has not yet been ported to the target machine.
+
+Users who are new to CIME should read `CIME Case Control System Part 1: Basic Usage
 <https://esmci.github.io/cime/versions/ufs_release_v1.1/html/users_guide/index.html#case-control-system-part-1-basic-usage>`_
-*after downloading the code*.  The CIME Users Guide will be easier to follow after the
+*after downloading the code*. The CIME User's Guide will be easier to follow after the
 directory structure has been created by the `git clone` command.
-
-This is the procedure for quickly setting up and running a case of MR Weather App.
-
-* Download the MR Weather App
-* Create a case: use ``create_newcase``
-* Setup  a case: use ``case.setup``
-* Build  a case: use ``case.build``
-* Run    a case: use ``case.submit``
 
 .. _downloading:
 
-Downloading the MR Weather App code and scripts
+Downloading the MRW App Code and Scripts
 ==========================================================================
 
-Access to the code requires git. You will need access to the command line clients, ``git``
-(v1.8 or greater). You can download the latest version of the release
-code:
+The MRW Application source code is publicly available on GitHub. To download the MRW App, clone the latest release branch:
 
 .. code-block:: console
 
-    git clone https://github.com/ufs-community/ufs-mrweather-app.git -b ufs-v1.1.0 my_ufs_sandbox
-    cd my_ufs_sandbox
+   git clone https://github.com/ufs-community/ufs-mrweather-app.git -b ufs-v1.1.0 my_ufs_sandbox
+   cd my_ufs_sandbox
+
+..
+   COMMENT: The release branch name will need to be updated. 
 
 .. note::
-    When cloning the ufs-mrweather-app repository, the connection to github may time out.  In this
+    When cloning the ``ufs-mrweather-app`` repository, the connection to GitHub may time out. In this
     case, resubmit the ``git clone`` command.
 
-The information of being a "detached HEAD" is a standard git notification about a release tag.  If you plan to add development to the codes, you will need a development branch.
+The information of being a "detached HEAD" is a standard git notification about a release tag. If you plan to add to the code, you will need a development branch.
 
-To checkout MR Weather Model components, including CIME, run the ``checkout_externals`` script from /path/to/my_ufs_sandbox.
+Throughout this guide, ``$MRWROOT`` will refer to the path to the ufs-mrweather-app repository, regardless of whether users choose to explicitly set this variable. If using a bash shell, the path to ``my_ufs_sandbox`` can be set to ``$MRWROOT`` as follows:
+
+.. code-block:: console
+
+   export MRWROOT="<path/to/my_ufs_sandbox>"
+
+where <path/to/my_ufs_sandbox> is replaced by the actual path. 
+
+.. _checkout-externals:
+
+Check Out External Components
+================================
+
+The MRW App relies on a variety of components, including CIME. Users must run the ``checkout_externals`` script from ``$MRWROOT`` to link the necessary external repositories to the MRW App.
 
 .. code-block:: console
 
     ./manage_externals/checkout_externals
 
-The ``checkout_externals`` script will read the configuration file ``Externals.cfg`` and
-will download the model source and CIME into /path/to/my_ufs_sandbox.
+The ``checkout_externals`` script will read the configuration file ``Externals.cfg`` and will download the model source code and CIME into ``$MRWROOT``.
 
 To see more details regarding the checkout_externals script from the command line, type:
 
@@ -63,45 +77,39 @@ To see more details regarding the checkout_externals script from the command lin
 
     ./manage_externals/checkout_externals --help
 
-To confirm a successful download of all components, you can run ``checkout_externals``
-with the status flag to show the status of the externals:
+To confirm a successful download of all components, you can run ``checkout_externals`` with the status flag to show the status of the externals:
 
 .. code-block:: console
 
     ./manage_externals/checkout_externals -S
 
-This should show a clean status for all externals, with no characters in the first two
-columns of output, as in this example:
+This should show a clean status for all externals, with no characters in the first two columns of output, as in this example:
 
 .. _top_level_dir_structure:
 
 .. code-block:: console
 
-    Checking status of externals: model, stochastic_physics, fv3, ccpp/framework, atmos_cubed_sphere, ccpp/physics, fms, nems, tests/produtil/nceplibs-pyprodutil, fv3gfs_interface, nems_interface, cime,
-        ./cime
-        ./src/model
-        ./src/model/FMS
-        ./src/model/FV3
-        ./src/model/FV3/atmos_cubed_sphere
-        ./src/model/FV3/ccpp/framework
-        ./src/model/FV3/ccpp/physics
-        ./src/model/FV3/cime
-        ./src/model/NEMS
-        ./src/model/NEMS/cime/
-        ./src/model/NEMS/tests/produtil/NCEPLIBS-pyprodutil
-        ./src/model/stochastic_physics
+   Checking status of externals: model, stochastic_physics, fv3, ccpp/framework, atmos_cubed_sphere, ccpp/physics, fms, nems, tests/produtil/nceplibs-pyprodutil, fv3gfs_interface, nems_interface, cime,
+      ./cime
+      ./src/model
+      ./src/model/FMS
+      ./src/model/FV3
+      ./src/model/FV3/atmos_cubed_sphere
+      ./src/model/FV3/ccpp/framework
+      ./src/model/FV3/ccpp/physics
+      ./src/model/FV3/cime
+      ./src/model/NEMS
+      ./src/model/NEMS/cime/
+      ./src/model/NEMS/tests/produtil/NCEPLIBS-pyprodutil
+      ./src/model/stochastic_physics
 
-You should now have a complete copy of the source code in your /path/to/my_ufs_sandbox.
-
-If there were problems obtaining an external, you might instead see something like:
+If there were problems obtaining an external, users might instead see something like:
 
 .. code-block:: console
 
     e-  ./src/model/FV3
 
-This might happen if there was an unexpected interruption while downloading.
-First try rerunning ``./manage_externals/checkout_externals``.
-If there is still a problem, try running with logging turned on using:
+This might happen if there was an unexpected interruption while downloading. First try rerunning ``./manage_externals/checkout_externals``. If there is still a problem, try running with logging turned on using:
 
 .. code-block:: console
 
@@ -112,42 +120,33 @@ Check the ``manage_externals.log`` file to see what errors are reported.
 .. _configurations:
 
 Model Configurations
-====================
+========================
 
-The MR Weather App can be configured at four out-of-the-box
-resolutions with two different compsets, ``GFSv15p2`` or
-``GFSv16beta``.  These compsets invoke physics suites that use or not
-an ocean-evolving parameterization depending on the initial data
-provided. See the Introduction for more information on the physics
-suites provided with the release and see the frequently-asked
-questions (:ref:`FAQ <faq>`) section for more information on compsets,
-physics suites, and initial datasets.
+The MRW App can be configured at four out-of-the-box resolutions with two different :term:`compsets`: ``GFSv15p2`` or ``GFSv16beta``. These compsets invoke physics suites, two of which use an ocean-evolving parameterization and two of which do not, depending on the initial data provided. See the :ref:`Introduction <introduction>` for more information on the physics suites provided with the release, and see the frequently-asked questions (:ref:`FAQ <faq-physics-compsets>`) section for more information on compsets, physics suites, and initial datasets.
 
-* Details of available component sets and resolutions are available from the ``query_config`` tool located in the ``cime/scripts`` directory
+* Details of available component sets and resolutions are available from the ``query_config`` tool located in the ``cime/scripts`` directory:
 
 .. code-block:: console
 
-   cd $SRCROOT/cime/scripts
+   cd $MRWROOT/cime/scripts
    ./query_config --help
 
-where ``$SRCROOT`` is the top directory of the ufs-mrweather-app.
+where ``$MRWROOT`` is the top directory of the ufs-mrweather-app.
 
 .. _supported-compsets:
 
 Supported component sets
 ------------------------
 
-The components of the modeling system can be combined in numerous ways to carry out various scientific or
-software experiments. A particular mix of components, along with component-specific configuration and/or
-namelist settings is referred to as  component set or "compset". The MR Weather App
+The components of the modeling system can be combined in numerous ways to carry out various scientific or software experiments. A particular mix of components, along with component-specific configuration and/or namelist settings is referred to as component set or ":term:`compset`". The MRW App
 has a shorthand naming convention for component sets that are supported out-of-the-box.
 
-To determine what MR Weather App compsets are available in the release, use
+To determine what MRW App compsets are available in the release, use
 the following command:
 
 .. code-block:: console
 
-   cd $SRCROOT/cime/scripts
+   cd $MRWROOT/cime/scripts
    ./query_config --compsets
 
 This should show a list of available compsets:
@@ -160,6 +159,7 @@ This should show a list of available compsets:
           --------------------------------------
       GFSv15p2             : FCST_ufsatm%v15p2_SLND_SICE_SOCN_SROF_SGLC_SWAV
       GFSv16beta           : FCST_ufsatm%v16beta_SLND_SICE_SOCN_SROF_SGLC_SWAV
+      HAFS                 : FCST_ufsatm%v0nocp_SLND_SICE_SOCN_SROF_SGLC_SWAV
 
 .. _supported-grids:
 
@@ -167,14 +167,16 @@ Supported grids
 ---------------
 
 :term:`CIME` has the flexibility to support numerous model resolutions.
-To see the grids that are currently supported, use the following command
+To see the grids that are currently supported, use the following command:
 
 .. code-block:: console
 
-   cd $SRCROOT/cime/scripts
+   cd $MRWROOT/cime/scripts
    ./query_config --grids
 
 This should show the a list of available grids for this release.
+
+
 
 .. code-block:: console
 
@@ -186,7 +188,7 @@ This should show the a list of available grids for this release.
    where
        a% => atm, l% => lnd, oi% => ocn/ice, r% => river, m% => mask, g% => glc, w% => wav
 
-   Supported grid configurations are given via alias specification in
+   Supported out of the box grid configurations are given via alias specification in
    the file "config_grids.xml". Each grid alias can also be associated  with the
    following optional attributes
 
@@ -204,27 +206,42 @@ This should show the a list of available grids for this release.
     iac      SIAC              null
     -------------------------------------------------------------
 
-    alias: C96
+   alias: C96
       non-default grids are: atm:C96
 
-    alias: C192
+   alias: C192
       non-default grids are: atm:C192
 
-    alias: C384
+   alias: C384
       non-default grids are: atm:C384
 
-    alias: C768
+   alias: C768
       non-default grids are: atm:C768
 
+   alias: T62_Atlantic8
+      non-default grids are: atm:T62  lnd:T62  ocnice:Atlantic8  
 
-As can be seen, MR Weather App currently supports four grids with the following nominal resolutions
+   alias: TL319_Atlantic8
+      non-default grids are: atm:TL319  lnd:TL319  ocnice:Atlantic8  
+
+   alias: TL639_Atlantic8
+      non-default grids are: atm:TL639  lnd:TL639  ocnice:Atlantic8  
+
+   alias: C768r_Atlantic8
+      non-default grids are: atm:C768r  lnd:C768r  ocnice:Atlantic8
+
+As can be seen, MRW App currently supports four grids with the following nominal resolutions
 
 * C96 (~100km)
-* C192 (~50km),
+* C192 (~50km)
 * C384 (~25km)
-* C768 (~13km),
+* C768 (~13km)
 
 and all with 64 vertical levels.
+
+..
+   COMMENT: Are the Atlantic grids now supported? (If not, I can remove.)
+   COMMENT: Are there still 64 vertical levels?
 
 Setup the environment
 =====================
@@ -238,16 +255,9 @@ Four environment variables need to be set prior to running the CIME workflow:
      export UFS_DRIVER=nems
      export CIME_MODEL=ufs
 
-``UFS_INPUT`` should be set to the location of a folder where input
-data will be accessed.  There should be a folder named
-``ufs_inputdata`` underneath this folder.  The folder
-``$UFS_INPUT/ufs_inputdata`` should exist before running the CIME
-workflow. This is often a shared location on a platform so that all
-users on that platform can access data from the same location.
+``UFS_INPUT`` should be set to the location of a folder where input data will be accessed. For Level 1 platforms, this is often a shared directory so that all users can access data from the same location. There should be a subdirectory named ``ufs_inputdata`` within this folder. The folder ``$UFS_INPUT/ufs_inputdata`` should exist before running the CIME workflow. 
 
-``UFS_SCRATCH`` should be set to the location of a writeable folder
-where output will be written for each case.  This is typically a user
-scratch space or temporary location with a large allocation available.
+``UFS_SCRATCH`` should be set to the location of a writeable folder where output will be written for each case. This is typically a user scratch space or temporary location with a large allocation available.
 
 The following settings are recommended on the pre-configured platforms:
 
@@ -265,8 +275,10 @@ The following settings are recommended on the pre-configured platforms:
    | NOAA Gaea       | /lustre/f2/pdata/esrl/gsd/ufs/ufs-release-v1.1/CIME_UFS | <my-project-dir>/$USER    |
    +-----------------+---------------------------------------------------------+---------------------------+
 
+..
+   COMMENT: Is this up-to-date? I know Hera now has /scratch2 space...
 
-On `platforms that are not pre-configured <https://github.com/ufs-community/ufs/wiki/Supported-Platforms-and-Compilers>`_ a script needs to be executed to define a set of environment variables related to the location of NCEPLIBS dependencies.
+On `platforms that are not pre-configured <https://github.com/ufs-community/ufs/wiki/Supported-Platforms-and-Compilers>`__ a script needs to be executed to define a set of environment variables related to the location of NCEPLIBS dependencies.
 
 .. code-block:: console
 
@@ -334,7 +346,7 @@ where:
 
 - ``WORKFLOW`` is the workflow and can be set as ``ufs-mrweather`` or ``ufs-mrweather_wo_post``. The
   ``ufs-mrweather`` includes both pre- and post-processing steps, while ``ufs-mrweather_wo_post`` includes
-  only pre-processing step. In the current version of the MR Weather App, the
+  only pre-processing step. In the current version of the MRW App, the
   pre-processing step need to be run to generate initial conditions for the UFS Weather Model.
 
 - ``PROJECT`` is the project or account code needed to run batch jobs. You
@@ -426,7 +438,7 @@ now are:
    <http://esmci.github.io/cime/versions/ufs_release_v1.1/html/users_guide/troubleshooting.html>`_ runtime problems
    before submitting for a longer time or a production runs. For example, following setting can be used to
    set the simulation lenght to 36-hours. Please, also be aware that ``nyears``, ``nmonths`` and ``nsteps``
-   options for ``STOP_OPTION`` are not supported in the MR Weather App.
+   options for ``STOP_OPTION`` are not supported in the MRW App.
 
    .. code-block:: console
 
@@ -482,7 +494,7 @@ comma separated names and no spaces):
 - ``$RUNDIR``
 
   This directory is set in the ``env_run.xml`` file. This is the
-  location where MR Weather App was run. Log files for each stage of the workflow can be found here.
+  location where MRW App was run. Log files for each stage of the workflow can be found here.
 
 .. table::  Log files
 

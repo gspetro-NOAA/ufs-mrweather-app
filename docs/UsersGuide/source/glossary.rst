@@ -7,8 +7,7 @@ Glossary
 .. glossary::
 
    CCPP
-      Model agnostic, vetted, collection of codes containing atmospheric physical parameterizations
-      and suites for use in NWP along with a framework that connects the physics to host models
+      The `Common Community Physics Package <https://dtcenter.org/community-code/common-community-physics-package-ccpp>`_ is a forecast-model agnostic, vetted collection of codes containing atmospheric physical parameterizations and suites of parameterizations for use in Numerical Weather Prediction (NWP) along with a framework that connects the physics to the host forecast model.
 
    chgres_cube
        The preprocessing software used to create initial condition files to “coldstart” the forecast
@@ -19,17 +18,31 @@ Glossary
       Control System for configuring, compiling and executing Earth system models, data and stub model
       components, a driver and associated tools and libraries.
 
+   Component
+      A software element that has a clear function and interface. In Earth system models, components are often single portions of the Earth system (e.g. atmosphere, ocean, or land surface) that are assembled to form a whole.
+
+   Compset
+      A component set. It refers to a particular mix of components, along with a component-specific configuration and/or namelist settings”.
+
+   Dynamical core
+      Global atmospheric model based on fluid dynamics principles, including Euler's equations of motion.
+
    FMS
       The Flexible Modeling System (FMS) is a software framework for supporting the efficient
       development, construction, execution, and scientific interpretation of atmospheric,
       oceanic, and climate system models.
 
    FV3
-      The GFDL Finite-Volume Cubed-Sphere Dynamical Core (FV3) is a scalable and flexible dynamical
-      core capable of both hydrostatic and non-hydrostatic atmospheric simulations.
+      The Finite-Volume Cubed-Sphere Dynamical Core (dycore). Developed at NOAA's Geophysical 
+      Fluid Dynamics Laboratory (GFDL), it is a scalable and flexible dycore capable of both 
+      hydrostatic and non-hydrostatic atmospheric simulations. It is the dycore used in the 
+      UFS Weather Model.
+
+   GFS
+      `Global Forecast System <https://www.ncei.noaa.gov/products/weather-climate-models/global-forecast>`_. The GFS is a National Centers for Environmental Prediction (NCEP) weather forecast model that generates data for dozens of atmospheric and land-soil variables, including temperatures, winds, precipitation, soil moisture, and atmospheric ozone concentration. The system couples four separate models (atmosphere, ocean model, land/soil model, and sea ice) that work together to accurately depict weather conditions.
 
    GRIB2 
-      The second version of the World Meterological Organization's (WMO) standard for distributing gridded data.  
+      The second version of the World Meterological Organization's (WMO) standard for distributing gridded data. 
 
    NCEP
       National Centers for Environmental Prediction, an arm of the National Weather Service.
@@ -55,9 +68,10 @@ Glossary
       A set of software libraries and machine-independent data formats that supports the creation, access, and sharing of array-oriented scientific data. 
 
    Stochastic physics
-      A package of stochastic schemes used to represent model uncertainty:  SKEB (Stochastic
-      Kinetic Energy Backscatter), SPPT (Stochastically Perturbed Physics Tendencies), and SHUM
-      (Specific Humidity)
+      A package of stochastic schemes used to represent model uncertainty: SKEB (Stochastic Kinetic Energy Backscatter), SPPT (Stochastically Perturbed Physics Tendencies), and SHUM (Specific Humidity)
+
+   ..
+      COMMENT: Need definition of the field of Stochastic physics. Then can specify that there is a stochastic physics package that does specific things. 
 
    Suite
       A collection of primary physics schemes and interstitial schemes that are known to work
@@ -71,9 +85,10 @@ Glossary
       operational numerical weather prediction applications
 
    UPP
-      The Unified Post Processing System, developed at NCEP and used operationally for models
-      maintained by NCEP. The UPP has the capability to post-process output from a variety of NWP
-      models, including FV3.
+      The `Unified Post Processor <https://dtcenter.org/community-code/unified-post-processor-upp>`__ is software developed at :term:`NCEP` and used operationally for models maintained by NCEP. The UPP processes raw model output from a variety of :term:`NCEP`'s NWP models, including the FV3.
+
+   Weather Enterprise
+      Individuals and organizations from public, private, and academic sectors that contribute to the research, development, and production of weather forecast products; primary consumers of these weather forecast products.
 
    Weather Model
       A prognostic model that can be used for short- and medium-range research and

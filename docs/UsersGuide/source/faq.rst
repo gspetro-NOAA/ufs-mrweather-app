@@ -8,7 +8,7 @@ How can I set required environment variables?
 =============================================
 The best practice is to set environment variables (``UFS_SCRATCH``, ``UFS_INPUT``,
 ``UFS_DRIVER``, ``CIME_MODEL``, and ``PROJECT``) in the user's enviroment. Some systems
-(in particular Stampede2) require to to export them in the ``.bashrc`` (Bash shell) or
+(in particular Stampede2) require to export them in the ``.bashrc`` (Bash shell) or
 ``.tcshrc`` (Tcsh shell) files for the batch jobs to function. These environment
 variables are then set automatically when a user opens a new shell or logs in to the server
 (including compute nodes). In platforms that are not preconfigured, the NCEPLIBS-provided
@@ -404,6 +404,8 @@ The output will contain entries like the following:
    ('      mpilibs        ', ['mpt', 'openmpi'])
    ('      pes/node       ', '36')
    ('      max_tasks/node ', '36')
+
+.. _faq-physics-compsets:
 
 What are the compsets and physics suites supported in this release?
 ====================================================================

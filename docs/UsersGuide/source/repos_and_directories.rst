@@ -43,7 +43,7 @@ associated with this umbrella (see :numref:`Table %s <top_level_repos>`).
 
 The UFS MR Weather Model is itself an umbrella repository and contains a number of sub-repositories
 used by the model as documented `here
-<https://ufs-weather-model.readthedocs.io/en/ufs-v1.1.0/CodeOverview.html>`_.
+<https://ufs-weather-model.readthedocs.io/en/ufs-v1.1.0/CodeOverview.html>`__.
 The CIME repository contains the workflow and build system for the prognostic model.  The
 two layer repositories provide interfaces to allow CIME to properly build the ufs-weather-model and the NEMS driver.
 
@@ -51,13 +51,13 @@ two layer repositories provide interfaces to allow CIME to properly build the uf
 
    Note that the prerequisite libraries (including NCEP Libraries) are not included in the MR
    Weather App repository.  The source code for these components resides in the umbrella
-   repositories `NCEPLIBS <https://github.com/NOAA-EMC/NCEPLIBS>`_ and
-   `NCEPLIBS-external <https://github.com/NOAA-EMC/NCEPLIBS-external>`_. The former has links to the
-   `chgres_cube preprocessor repository <https://github.com/NOAA-EMC/UFS_UTILS>`_ and to `UPP
-   <https://github.com/NOAA-EMC/EMC_post>`_.
+   repositories `NCEPLIBS <https://github.com/NOAA-EMC/NCEPLIBS>`__ and
+   `NCEPLIBS-external <https://github.com/NOAA-EMC/NCEPLIBS-external>`__. The former has links to the
+   `chgres_cube preprocessor repository <https://github.com/NOAA-EMC/UFS_UTILS>`__ and to `UPP
+   <https://github.com/NOAA-EMC/EMC_post>`__.
 
    These external components are already built on the preconfigured platforms
-   listed `here <https://github.com/ufs-community/ufs/wiki/Supported-Platforms-and-Compilers>`_.
+   listed `here <https://github.com/ufs-community/ufs/wiki/Supported-Platforms-and-Compilers>`__.
    However, they must be cloned and built on other platforms according to the instructions provided in the
    wiki pages of those repositories: <https://github.com/NOAA-EMC/NCEPLIBS/wiki>` and
    <https://github.com/NOAA-EMC/NCEPLIBS-external/wiki>.
