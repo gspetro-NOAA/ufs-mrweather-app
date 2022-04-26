@@ -22,6 +22,7 @@ Glossary
       A software element that has a clear function and interface. In Earth system models, components are often single portions of the Earth system (e.g. atmosphere, ocean, or land surface) that are assembled to form a whole.
 
    Compset
+   Compsets
       A component set. It refers to a particular mix of components, along with a component-specific configuration and/or namelist settings”.
 
    Dynamical core
@@ -43,6 +44,12 @@ Glossary
 
    GRIB2 
       The second version of the World Meterological Organization's (WMO) standard for distributing gridded data. 
+
+   HPC-Stack
+      The `HPC-Stack <https://github.com/NOAA-EMC/hpc-stack>`__ is a repository that provides a unified, shell script-based build system for building the software stack required for numerical weather prediction (NWP) tools such as the `Unified Forecast System (UFS) <https://ufscommunity.org/>`__ and the `Joint Effort for Data assimilation Integration (JEDI) <https://jointcenterforsatellitedataassimilation-jedi-docs.readthedocs-hosted.com/en/latest/>`__ framework.
+
+   MPI
+      MPI stands for Message Passing Interface. An MPI is a standardized communication system used in parallel programming. It establishes portable and efficient syntax for the exchange of messages and data between multiple processors that are used by a single computer program. An MPI is required for high-performance computing (HPC).
 
    NCEP
       National Centers for Environmental Prediction, an arm of the National Weather Service.
@@ -66,6 +73,9 @@ Glossary
 
    NetCDF
       A set of software libraries and machine-independent data formats that supports the creation, access, and sharing of array-oriented scientific data. 
+
+   spack-stack
+      The `spack-stack <https://github.com/NOAA-EMC/spack-stack>`__ is a collaborative effort between the NOAA Environmental Modeling Center (EMC), the UCAR Joint Center for Satellite Data Assimilation (JCSDA), and the Earth Prediction Innovation Center (EPIC). *spack-stack* is a repository that provides a system for building the software stack required for numerical weather prediction (NWP) tools such as the `Unified Forecast System (UFS) <https://ufscommunity.org/>`__ and the `Joint Effort for Data assimilation Integration (JEDI) <https://jointcenterforsatellitedataassimilation-jedi-docs.readthedocs-hosted.com/en/latest/>`__ framework. It uses the Spack package manager along with custom Spack configuration files and Python scripts to simplify installation of the libraries required to run various applications. The *spack-stack* can be installed on a range of platforms and comes pre-configured for many systems. Users can install the necessary packages for a particular application and later add the missing packages for another application without having to rebuild the entire stack.
 
    Stochastic physics
       A package of stochastic schemes used to represent model uncertainty: SKEB (Stochastic Kinetic Energy Backscatter), SPPT (Stochastically Perturbed Physics Tendencies), and SHUM (Specific Humidity)
