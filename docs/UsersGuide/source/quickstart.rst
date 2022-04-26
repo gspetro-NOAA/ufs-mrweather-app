@@ -135,8 +135,8 @@ where ``$MRWROOT`` is the top directory of the ufs-mrweather-app.
 
 .. _supported-compsets:
 
-Supported component sets
-------------------------
+Supported Component Sets
+---------------------------
 
 The components of the modeling system can be combined in numerous ways to carry out various scientific or software experiments. A particular mix of components, along with component-specific configuration and/or namelist settings is referred to as component set or ":term:`compset`". The MRW App
 has a shorthand naming convention for component sets that are supported out-of-the-box.
@@ -163,8 +163,8 @@ This should show a list of available compsets:
 
 .. _supported-grids:
 
-Supported grids
----------------
+Supported Grids
+------------------
 
 :term:`CIME` has the flexibility to support numerous model resolutions.
 To see the grids that are currently supported, use the following command:
@@ -230,34 +230,34 @@ This should show the a list of available grids for this release.
    alias: C768r_Atlantic8
       non-default grids are: atm:C768r  lnd:C768r  ocnice:Atlantic8
 
-As can be seen, MRW App currently supports four grids with the following nominal resolutions
+As can be seen, the MRW App currently supports four grids with the following nominal resolutions
 
+* C48 (~200km)
 * C96 (~100km)
 * C192 (~50km)
 * C384 (~25km)
 * C768 (~13km)
 
-and all with 64 vertical levels.
+and all with 127 vertical levels.
 
 ..
    COMMENT: Are the Atlantic grids now supported? (If not, I can remove.)
-   COMMENT: Are there still 64 vertical levels?
 
-Setup the environment
-=====================
+Setup the Environment
+========================
 
-Four environment variables need to be set prior to running the CIME workflow:
+Four environment variables must be set prior to running the CIME workflow:
 
 .. code-block:: console
 
-     export UFS_INPUT=/path/to/inputs
-     export UFS_SCRATCH=/path/to/outputs
+     export UFS_INPUT=</path/to/inputs>
+     export UFS_SCRATCH=</path/to/outputs>
      export UFS_DRIVER=nems
      export CIME_MODEL=ufs
 
-``UFS_INPUT`` should be set to the location of a folder where input data will be accessed. For Level 1 platforms, this is often a shared directory so that all users can access data from the same location. There should be a subdirectory named ``ufs_inputdata`` within this folder. The folder ``$UFS_INPUT/ufs_inputdata`` should exist before running the CIME workflow. 
+``UFS_INPUT`` should be set to the directory where input data is located. For Level 1 platforms, this is often a shared directory so that all users can access data from the same location. There should be a subdirectory named ``ufs_inputdata`` within this folder. The folder ``$UFS_INPUT/ufs_inputdata`` should exist before running the CIME workflow. 
 
-``UFS_SCRATCH`` should be set to the location of a writeable folder where output will be written for each case. This is typically a user scratch space or temporary location with a large allocation available.
+``UFS_SCRATCH`` should be set to the location of a writeable directory where output will be written for each case. This is typically a user scratch space or temporary location with a large storage allocation available.
 
 The following settings are recommended on the pre-configured platforms:
 
@@ -275,10 +275,12 @@ The following settings are recommended on the pre-configured platforms:
    | NOAA Gaea       | /lustre/f2/pdata/esrl/gsd/ufs/ufs-release-v1.1/CIME_UFS | <my-project-dir>/$USER    |
    +-----------------+---------------------------------------------------------+---------------------------+
 
+On `Level 1 systems <https://github.com/ufs-community/ufs-mrweather-app/wiki/Supported-Platforms-and-Compilers-for-UFS-Medium-Range-Weather-App-release-v1.1>`__, ``<my-project-dir>`` corresponds to any project directory on which the user has access/permissions. Running the ``groups`` command on a system generates a list of the user's projects. 
+
 ..
    COMMENT: Is this up-to-date? I know Hera now has /scratch2 space...
 
-On `platforms that are not pre-configured <https://github.com/ufs-community/ufs/wiki/Supported-Platforms-and-Compilers>`__ a script needs to be executed to define a set of environment variables related to the location of NCEPLIBS dependencies.
+On `non-pre-configured platforms <https://github.com/ufs-community/ufs/wiki/Supported-Platforms-and-Compilers>`__, a script needs to be executed to define a set of environment variables related to the location of NCEPLIBS dependencies.
 
 .. code-block:: console
 
@@ -291,7 +293,7 @@ On `platforms that are not pre-configured <https://github.com/ufs-community/ufs/
 The recommended best practice is to set the ``$UFS_SCRATCH`` and
 ``$UFS_INPUT`` environment variables and source the NCEPLIBS provided
 shell script ``setenv_nceplibs.sh|.csh`` in the user environment before
-creating the case and running the setup, build and submit steps.
+creating the case and running the setup, build, and submit steps.
 
 .. important::
      On some platforms (in particular Stampede2) it is **required** to export
@@ -307,18 +309,11 @@ Create a case
 The `create_newcase`_ command creates a case directory containing the scripts and XML
 files to configure a case (see below) for the requested resolution, component set, and
 machine. ``create_newcase`` has three required arguments: ``--case``, ``--compset`` and
-``--res``.   The ``workflow`` argument is optional, to select alternate workflow components (see below).
-The ``project`` argument is optional, to set the batch system project account (see below).
-(invoke ``create_newcase --help`` for help).
+``--res``.   The ``workflow`` argument is optional and allows the user to select alternate workflow components (see below). The ``project`` argument is also optional and allows the user to set the batch system project account (see below). (Invoke ``create_newcase --help`` for help).
 
-On machines where a project or account code is needed, you
-must either specify the ``--project $PROJECT`` argument in the ``create_newcase`` command, or set the
-``$PROJECT`` variable in your shell environment.  If this argument is not set, the default value in config_machines.xml for ``$PROJECT`` will be used. An error will be reported if the default project account is not accessable.
+On machines where a project or account code is needed, users must either specify the ``--project $PROJECT`` argument in the ``create_newcase`` command, or set the ``$PROJECT`` variable in their shell environment.  If this argument is not set, the default value in *config_machines.xml* for ``$PROJECT`` will be used. This will cause an error report if the default project account is not accessible.
 
-If running on a preconfigured or configurable machine, that machine
-will normally be recognized automatically and therefore it is not
-required to specify the ``--machine`` argument to create_newcase. Generic linux and
-macos systems will require the ``--machine linux`` / ``--machine macos`` argument to be used (see :numref:`Section %s <genericMacOS>`).
+If running on a preconfigured or configurable machine, that machine will be recognized automatically, and therefore it is not necessary to specify the ``--machine`` argument for ``create_newcase``. Generic linux and macos systems do require the ``--machine linux`` / ``--machine macos`` argument (see :numref:`Section %s <genericMacOS>`).
 
 Invoke ``create_newcase`` as follows from the ``cime/scripts`` directory:
 
@@ -329,31 +324,17 @@ Invoke ``create_newcase`` as follows from the ``cime/scripts`` directory:
 
 where:
 
-- ``CASENAME`` defines the name of your case (stored in the ``$CASE`` XML variable). This
-  is a very important piece of metadata that will be used in filenames, internal metadata
-  and directory paths. ``create_newcase`` will create the *case directory* with the same
-  name as the ``CASENAME``. If ``CASENAME`` is simply a name (not a path), the case
-  directory is created in the ``cime/scripts`` directory where you executed create_newcase.
-  If ``CASENAME`` is a relative or absolute path, the case directory is created there and the name of the
-  case will be the tail path. The full path to the case directory will be
-  stored in the ``$CASEROOT`` XML variable.
+- ``CASENAME`` defines the name of the case (stored in the ``$CASE`` XML variable). This information will be used in filenames, internal metadata, and directory paths. ``create_newcase`` will create the *case directory* with the same name as the ``CASENAME``. If ``CASENAME`` is simply a name (not a path), the case directory is created in the ``cime/scripts`` directory where the user executed ``create_newcase``. If ``CASENAME`` is a relative or absolute path, the case directory is created there and the name of the case will be the tail path. The full path to the case directory will be stored in the ``$CASEROOT`` XML variable.
 
-- ``COMPSET`` is the component set and can be ``GFSv15p2`` or ``GFSv16beta``, which trigger
-  supported Common Community Physics Package (CCPP) suites. If you would like to learn more about CCPP
-  please consider reading the `CCPP Overview <https://ccpp-techdoc.readthedocs.io/en/latest/Overview.html>`_.
+- ``COMPSET`` is the component set and can be ``GFSv15p2`` or ``GFSv16beta``, which trigger supported Common Community Physics Package (CCPP) suites. If you would like to learn more about CCPP please read the `CCPP Overview <https://ccpp-techdoc.readthedocs.io/en/latest/Overview.html>`_.
 
 - ``GRID`` is the model resolution, which can be ``C96``, ``C192``, ``C384`` and ``C768``.
 
-- ``WORKFLOW`` is the workflow and can be set as ``ufs-mrweather`` or ``ufs-mrweather_wo_post``. The
-  ``ufs-mrweather`` includes both pre- and post-processing steps, while ``ufs-mrweather_wo_post`` includes
-  only pre-processing step. In the current version of the MRW App, the
-  pre-processing step need to be run to generate initial conditions for the UFS Weather Model.
+- ``WORKFLOW`` is the workflow and can be set as ``ufs-mrweather`` or ``ufs-mrweather_wo_post``. The ``ufs-mrweather`` includes both pre- and post-processing steps, while ``ufs-mrweather_wo_post`` includes only pre-processing step. In the current version of the MRW App, the pre-processing step need to be run to generate initial conditions for the UFS Weather Model.
 
-- ``PROJECT`` is the project or account code needed to run batch jobs. You
-  may either specify the ``--project $PROJECT`` argument in the ``create_newcase`` command, or set the
-  ``$PROJECT`` variable in your shell environment.
+- ``PROJECT`` is the project or account code needed to run batch jobs. You may either specify the ``--project $PROJECT`` argument in the ``create_newcase`` command, or set the ``$PROJECT`` variable in your shell environment.
 
-Here is an example on NCAR machine Cheyenne with the ``$USER`` shell environment variable
+Here is an example on NCAR's Cheyenne machine with the ``$USER`` shell environment variable
 set to your Cheyenne login name:
 
 .. code-block:: console

@@ -410,7 +410,7 @@ The output will contain entries like the following:
 What are the compsets and physics suites supported in this release?
 ====================================================================
 
-There are two compsets supported in this release: GFSv15p2 and GFSv16beta,
+There are two :term:`compsets` supported in this release: GFSv15p2 and GFSv16beta,
 corresponding to the physics suites associated with the operational GFS v15 model
 and with the developmental physics for the future implementation of GFS v16.
 However, there are four physics suites supported for this release: GFSv15p2,
