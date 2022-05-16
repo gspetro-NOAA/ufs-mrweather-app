@@ -10,9 +10,9 @@ Procedure for running a case of the MRW App:
 
 #. Download the MRW App
 #. Create a case: use ``create_newcase``
-#. Setup  a case: use ``case.setup``
-#. Build  a case: use ``case.build``
-#. Run    a case: use ``case.submit``
+#. Setup a case: use ``case.setup``
+#. Build a case: use ``case.build``
+#. Run a case: use ``case.submit``
 
 .. _prerequisites:
 
@@ -22,7 +22,7 @@ Prerequisites for Running the MRW App
 * `Git <https://git-scm.com/book/en/v2/Getting-Started-Installing-Git>`__ (v1.8 or greater)
 * `CIME <http://esmci.github.io/cime/versions/ufs_release_v1.1/html/users_guide/porting-cime.html>`__
 
-The MRW App workflow is built on the CIME (Common Infrastructure for Modeling Earth) framework. Please refer to the `CIME Porting Documentation <http://esmci.github.io/cime/versions/ufs_release_v1.1/html/users_guide/porting-cime.html>`__ if CIME has not yet been ported to the target machine.
+The MRW App workflow is built on the Common Infrastructure for Modeling Earth (CIME)) framework. Please refer to the `CIME Porting Documentation <http://esmci.github.io/cime/versions/ufs_release_v1.1/html/users_guide/porting-cime.html>`__ if CIME has not yet been ported to the target machine.
 
 Users who are new to CIME should read `CIME Case Control System Part 1: Basic Usage
 <https://esmci.github.io/cime/versions/ufs_release_v1.1/html/users_guide/index.html#case-control-system-part-1-basic-usage>`_
@@ -56,7 +56,7 @@ Throughout this guide, ``$MRWROOT`` will refer to the path to the ufs-mrweather-
 
    export MRWROOT="<path/to/my_ufs_sandbox>"
 
-where <path/to/my_ufs_sandbox> is replaced by the actual path. 
+where ``<path/to/my_ufs_sandbox>`` is replaced by the actual path. 
 
 .. _checkout-externals:
 
@@ -334,13 +334,12 @@ where:
 
 - ``PROJECT`` is the project or account code needed to run batch jobs. You may either specify the ``--project $PROJECT`` argument in the ``create_newcase`` command, or set the ``$PROJECT`` variable in your shell environment.
 
-Here is an example on NCAR's Cheyenne machine with the ``$USER`` shell environment variable
-set to your Cheyenne login name:
+Here is an example on NCAR's Cheyenne machine with the ``$USER`` shell environment variable set to the user's Cheyenne login name:
 
 .. code-block:: console
 
-    cd cime/scripts
-    ./create_newcase --case $UFS_SCRATCH/ufs-mrweather-app-workflow.c96 --compset GFSv15p2 --res C96 --workflow ufs-mrweather
+   cd cime/scripts
+   ./create_newcase --case $UFS_SCRATCH/ufs-mrweather-app-workflow.c96 --compset GFSv15p2 --res C96 --workflow ufs-mrweather
 
 Setting up the case run script
 ==============================

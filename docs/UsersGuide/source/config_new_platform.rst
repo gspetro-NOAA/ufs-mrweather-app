@@ -81,7 +81,7 @@ This section describes the steps needed to port the CIME workflow to a new platf
 Add the new machine description to config_machines.xml
 ----------------------------------------------------------
 
-Edit the file **$CIMEROOT/config/ufs/machines/config_machines.xml** and add a new `<machine/>` entry
+Edit the file ``$CIMEROOT/config/ufs/machines/config_machines.xml`` and add a new `<machine/>` entry
 under the root XML element.
 A good approach is to copy an existing `<machine/>` description and modify it to match
 the new machine to which you are porting CIME. An example entry looks like this:
@@ -161,7 +161,7 @@ When finished, verify that your **config_machines.xml** file conforms to its sch
 Add the batch system to config_batch.xml
 ----------------------------------------------
 
-Edit file **$CIMEROOT/config/ufs/machines/config_batch.xml** and add a `<batch_system/>` element
+Edit file ``$CIMEROOT/config/ufs/machines/config_batch.xml`` and add a `<batch_system/>` element
 describing the batch system on the new machine.  Again, this can be done by copying an existing element
 and making any needed modifications.  Here is an example batch description:
 
@@ -210,7 +210,7 @@ If you choose to build ``cprnc`` use these steps:
 
 You should now have a ``cprnc`` executable. Ideally, this executable
 will be moved to a shared location so that all users on the platform have access to the tool.
-Update **$CIMEROOT/config/ufs/machines/config_machines.xml**
+Update ``$CIMEROOT/config/ufs/machines/config_machines.xml``
 and set ``CCSM_CPRNC`` to the path of the ``cprnc`` executable.
 
 
@@ -225,6 +225,6 @@ build and run a basic workflow with the UFS MRW App.
       cd $CIMEROOT/scripts
       ./create_test SMS_Lh5.C96.GFSv15p2 --workflow ufs-mrweather --machine $MACHINE
 
-The **$MACHINE** is the name of the machine that you added to the **config_machines.xml**.
+The ``$MACHINE`` is the name of the machine that you added to the ``config_machines.xml`` file.
 
 This will attempt to run the full end-to-end workflow including pre-processing, model forecast, and post-processing.
