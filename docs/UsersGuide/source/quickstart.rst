@@ -4,6 +4,108 @@
 Workflow Quick Start
 ====================
 
+Using UFS Medium-Range Weather Application with Global Workflow
+=================================================================
+
+Set-up (uncoupled, free-forecast mode w/ cold-start initial conditions)
+--------------------------------------------------------------------------
+
+#. Clone repository and checkout global workflow:
+
+.. code-block:: console
+   git clone https://github.com/ufs-community/ufs-mrweather-app.git
+   cd ufs-mrweather-app
+   ./manage_externals/checkout_externals
+
+#. Check if checkout of externals was successful using:
+
+.. code-block:: console
+   
+   ./manage_externals/checkout_externals -S
+
+#. Build UFS model and global-workflow components
+
+.. code-block:: console
+   
+   sh build_global-workflow.sh [-c]
+
+(ONLY use the -c option to compile for coupled UFS; requires different physics packages and APP argument when running setup_expt.py in step 5. )
+
+#. Create a COMROT and EXPDIR. The experiment and workflow set-up scripts in following steps will point to these paths. Initial conditions will also need to be placed in COMROT.
+
+#. Run experiment generator script:
+
+.. code-block:: console
+   
+   cd ufs-mrweather-app/global-workflow/ush/rocoto
+
+   On Orion:
+
+   .. code-block:: console
+      
+      module load contrib/0.1
+      module load rocoto/1.3.3
+
+   On Hera:
+
+   .. code-block:: console
+      
+      module use -a /contrib/anaconda/modulefiles
+      module load anaconda/anaconda3-5.3.1
+
+.. code-block:: console
+   
+   ./setup_expt.py forecast-only --pslot $EXP_NAME --idate YYYYMMDDCC --edate YYYYMMDDCC--resdet desired_resolution --gfs_cyc 4 --comrot $PATH_TO_YOUR_COMROT_DIR --expdir $PATH_TO_YOUR_EXPDIR
+
+(example with COMROT and EXPDIR paths):
+
+.. code-block:: console
+   
+   ./setup_expt.py forecast-only --pslot test --idate 2020010100 --edate 2020010118 --resdet 384 --gfs_cyc 4 --comrot /work/noaa/stmp/cbook/COMROT --expdir /work/noaa/epic-ps/cbook/uncoupled/EXPDIR
+
+This will generate $PSLOT (specific experiment name) folders in COMROT and EXPDIR, with config files in $EXPDIR/$PSLOT
+
+Copy IC files into COMROT/$PSLOT. Directory name should be like: gfs.YYYYMMDDCC, with structure: gfs.$YYYYMMDD/CC/atmos. INPUT folder within …/atmos/ contains sfc files needed for GFS ATM to run.
+Edit config.base in $EXPDIR/$PSLOT (ACCOUNT, HOMEDIR, STMP/PTMP, HPSSARCH)
+
+Run the following to generate a crontab and xml files for the experiment in $EXPDIR/$PSLOT
+
+.. code-block:: console
+   
+   ./setup_workflow_fcstonly.py --expdir $EXPDIR/$PSLOT
+
+Submit job through crontab by copying entry in $PSLOT.crontab into crontab via crontab -e.
+
+Monitor status of workflow using rocotostat:
+
+.. code-block:: console
+   
+   rocotostat -d /path/to/workflow/database/file -w /path/to/workflow/xml/file [-c YYYYMMDDCCmm,[YYYYMMDDCCmm,...]] [-t taskname,[taskname,...]] [-s] [-T]
+
+For example: 
+
+.. code-block:: console
+   
+   rocotostat -d $PSLOT.db -w $PSLOT.xml
+
+Check status of specific task/job:
+
+.. code-block:: console
+   
+   rocotocheck -d /path/to/workflow/database/file -w /path/to/workflow/xml/file -c YYYYMMDDCCmm -t taskname
+
+
+Helpful documentation: https://github.com/NOAA-EMC/global-workflow/wiki/Run-Global-Workflow
+
+
+
+
+
+
+REMOVE/EDIT below this line:
+*******************************************************************************************************
+
+
 This Quick Start Guide will help users to build and run the "out-of-the-box" case for the Unified Forecast System (:term:`UFS`) `Medium-Range Weather (MRW) Application <https://github.com/ufs-community/ufs-mrweather-app>`__ on preconfigured (`Level 1 <https://github.com/ufs-community/ufs/wiki/Supported-Platforms-and-Compilers>`__) machines. For other machines, please refer to :numref:`Chapter %s <config_new_platform>` before using the Quick Start Guide.
 
 Procedure for running a case of the MRW App:

@@ -4,133 +4,139 @@
 Introduction
 =============
 
-The Unified Forecast System (:term:`UFS`) is a community-based, coupled, comprehensive
-Earth modeling system. The UFS is designed to be the source system for NOAA’s
-operational numerical weather prediction (NWP) applications. It enables research, development, and contribution opportunities within the broader :term:`weather enterprise` (e.g. government, industry, and academia). For more information about the UFS, visit the `UFS Portal <https://ufscommunity.org/>`__.
+The Unified Forecast System (:term:`UFS`) is a community-based, coupled, comprehensive Earth modeling system. NOAA’s operational model suite for numerical weather prediction (NWP) is quickly transitioning to the UFS from a number of different modeling systems. The UFS enables research, development, and contribution opportunities within the broader :term:`weather enterprise` (e.g. government, industry, and academia). For more information about the UFS, visit the `UFS Portal <https://ufscommunity.org/>`__.
+
 
 The Unified Forecast System (:term:`UFS`) includes `multiple applications <https://ufscommunity.org/science/aboutapps/>`__ that span local to global domains and a range of predictive time scales. 
-The first of these to be released to the community is the UFS Medium-Range
-Weather (MRW) Application (App), which targets predictions of atmospheric
-behavior out to about two weeks. The MRW App v1.1 includes a prognostic
-atmospheric model, pre- and post-processing tools, and a community workflow. These components are documented within this User's Guide and supported through a `community forum <https://forums.ufscommunity.org/>`_. 
+This documentation describes the UFS Medium-Range Weather (MRW) Application (App), which targets predictions of atmospheric behavior out to about two weeks. This MRW App release includes a prognostic
+atmospheric model, pre- and post-processing tools, and a community workflow. These components are documented within this User's Guide and supported through a `community forum <https://forums.ufscommunity.org/>`_. Additionally, the MRW App has transitioned from a :term:`CIME`-based workflow to the `global workflow <https://github.com/NOAA-EMC/global-workflow/>`__. New and improved capabilities for the upcoming release include the addition of a verification package (METplus) for both deterministic and ensemble simulations and support for four Stochastically Perturbed Perturbation (SPP) schemes. Future work will expand the capabilities of the application to include data assimilation (DA) and a forecast restart/cycling capability.
 
-The release is `available on GitHub <https://github.com/ufs-community/ufs-mrweather-app/tree/release/public-v1>`__ and is designed to be code that the community can run and improve. It is portable to a set of `commonly used platforms <https://github.com/ufs-community/ufs-mrweather-app/wiki/Supported-Platforms-and-Compilers-for-UFS-Medium-Range-Weather-App-release-v1.1>`__. A limited set of configurations of the release, such as specific model resolutions and physics options, are documented and supported. This documentation provides an overview of the release components, a
+The MRW App is `available on GitHub <https://github.com/ufs-community/ufs-mrweather-app.git>`__ and is designed to be code that the community can run and improve. It is portable to a set of `commonly used platforms <https://github.com/ufs-community/ufs-mrweather-app/wiki/Supported-Platforms-and-Compilers-for-MRW-App>`__. A limited set of configurations of the release, such as specific model resolutions and physics options, are documented and supported. This documentation provides an overview of the release components, a
 description of the supported capabilities, a quick start for running the
 application, and information on where to find more information and obtain support.
 
+
+This documentation provides a :ref:`Quick Start Guide <quickstart>` for running the MRW Application and a detailed guide for running the SRW App on supported platforms. It also provides an overview of the release components and details on how to customize or modify different portions of the workflow.
+
 ..
-   COMMENT: Update release number/links
+   COMMENT: Add: The MRW App v2.0.0 citation is as follows and should be used when presenting results based on research conducted with the App: UFS Development Team. (2022, June __). Unified Forecast System (UFS) Medium-Range Weather (MRW) Application (Version v2.0.0). Zenodo. https://doi.org/.........
+
+
+..
+   COMMENT: Update release number/links; remove reference to "upcoming" release.
+   COMMENT: Is the "future work" section accurate?
+   COMMENT: Add v2.0.0 wiki page!
+
+
+.. _Components:
 
 Pre-processor and Initial Conditions
 ====================================
-The MRW App is distributed with the :term:`chgres_cube` pre-processing software.
-It converts the Global Forecast System (GFS) analyses to the format needed as
-input to the model, which is six tiles in netCDF format. Additional information
-about chgres_cube can be found in the `chgres_cube User’s Guide <https://ufs-utils.readthedocs.io/en/ufs-v1.1.0/>`__.
+The MRW App is distributed with the :term:`chgres_cube` pre-processing software, which is part of the `UFS_UTILS <https://github.com/ufs-community/UFS_UTILS>`__ pre-processing utilities package.
+``chgres_cube`` converts the Global Forecast System (GFS) analyses to the format needed by the :term:`Weather Model` (i.e., six tiles in netCDF format). Additional information
+about ``chgres_cube`` can be found in the `UFS_UTILS User’s Guide <https://ufs-utils.readthedocs.io/en/ufs-v1.1.0/>`__.
 
-GFS analyses for initializing the MRW App can be in Gridded Binary
-v2 (:term:`GRIB2`) format (in 0.50, or 1.0 degree grid spacing),  the NOAA Environmental
-Modeling System (:term:`NEMS`) Input/Output (:term:`NEMSIO`) format, or Network Common Data Form (:term:`NetCDF`). Initialization from dates starting on January 1, 2018 are supported. Dates
-before that may work, but are not guaranteed. GFS public archives can be
-accessed through  the `THREDDS Data Server at NCEI <https://www.ncei.noaa.gov/thredds/model/gfs.html>`__.
-A small sample of files in all supported formats can be found at `the EMC FTP site <https://ftp.emc.ncep.noaa.gov/EIB/UFS/>`__. The initial conditions may be pre-staged on disk by the user or
-automatically downloaded by the workflow.
+GFS analyses for initializing the MRW App can be in Gridded Binary v2 (:term:`GRIB2`) format (in 0.50, or 1.0 degree grid spacing), the NOAA Environmental Modeling System (:term:`NEMS`) Input/Output (:term:`NEMSIO`) format, or Network Common Data Form (:term:`NetCDF`) format. Initialization from dates starting on January 1, 2018 are supported. Dates before that may work but are not guaranteed. GFS public archives can be accessed through  the `THREDDS Data Server at NCEI <https://www.ncei.noaa.gov/thredds/model/gfs.html>`__. A small sample of files in all supported formats can be found at `the EMC FTP site <https://ftp.emc.ncep.noaa.gov/EIB/UFS/>`__. The initial conditions may be pre-staged on disk by the user or automatically downloaded by the workflow.
 
 Forecast model
 ==============
 
-The prognostic model in the MRW App is the atmospheric component
-of the UFS Weather Model, which employs the Finite-Volume Cubed-Sphere (:term:`FV3`)
-dynamical core. The atmospheric model in this release is an updated version
-of the atmospheric model that is being used in the operational GFS v15.
+The prognostic model in the MRW App is the atmospheric component of the UFS Weather Model, which employs the Finite-Volume Cubed-Sphere (:term:`FV3`) dynamical core. The atmospheric model in this release is an updated version of the atmospheric model that is being used in the operational GFS v15.
 A User’s Guide for the UFS Weather Model is `here <https://ufs-weather-model.readthedocs.io/en/ufs-v1.1.0>`__.
 
-Supported grid configurations for this release are the global meshes with
-resolutions of C96 (~100 km), C192 (~50 km), C384 (~25 km), and C768 (~13 km),
-all with 64 vertical levels. The `NOAA Geophysical Fluid Dynamics Laboratory website <https://www.gfdl.noaa.gov/fv3>`__ provides more information about FV3 and its grids. Additional information about the FV3 dynamical core is at `here <https://noaa-emc.github.io/FV3_Dycore_ufs-v1.1.0/html/index.html>`__.
-Interoperable atmospheric physics, along with the Noah land surface model, are
-supported through the use of the Common Community Physics Package (:term:`CCPP`;
-described `here <https://dtcenter.org/community-code/common-community-physics-package-ccpp>`__).
-There are four physics suites supported for the release.
-Two of them are variations of an updated version of the physics :term:`suite` used in
-the operational GFS v15, while the other two are variations of an experimental
-suite that includes a subset of the developments for the next version of GFS,
-GFS v16. The variations pertain to how the sea surface temperature (SST) is
-initialized and parameterized to evolve, and are chosen depending on the type
-of initial conditions for the App. Initial conditions in :term:`GRIB2` format have a
-single two-dimensional field to initialize the SST, which must be kept constant
-throughout the forecast. Initial conditions in :term:`NEMSIO` or :term:`netCDF` format have two two-dimensional fields that describe the baseline SST and its near-surface perturbation related
-to the diurnal cycle, enabling the use of the near-sea-surface-temperature (NSST)
-physical parameterization to forecast the temporal variation in SST due to the diurnal cycle.
+Supported grid configurations for this release are the global meshes with resolutions of C96 (~100 km), C192 (~50 km), C384 (~25 km), and C768 (~13 km), all with 127 vertical levels. The `NOAA Geophysical Fluid Dynamics Laboratory website <https://www.gfdl.noaa.gov/fv3>`__ provides more information about FV3 and its grids. Additional information about the FV3 dynamical core is at `here <https://noaa-emc.github.io/FV3_Dycore_ufs-v1.1.0/html/index.html>`__.
+
+Interoperable atmospheric physics, along with various land surface model options, are supported through the Common Community Physics Package (:term:`CCPP`), described `here <https://dtcenter.org/community-code/common-community-physics-package-ccpp>`__. Atmospheric physics are a set of numerical methods describing small-scale processes such as clouds, turbulence, radiation, and their interactions.  There are four physics suites supported for the v2.0 release. The first is the FV3_RRFS_v1beta physics suite, which is being tested for use in the future operational implementation of the Rapid Refresh Forecast System (RRFS) planned for 2023-2024, and the second is an updated version of the physics suite used in the operational Global Forecast System (GFS) v16. Additionally, FV3_WoFS and FV3_HRRR will be supported. A scientific description of the CCPP parameterizations and suites can be found in the `CCPP Scientific Documentation <https://dtcenter.ucar.edu/GMTB/v5.0.0/sci_doc/index.html>`_, and CCPP technical aspects are described in the `CCPP Technical Documentation <https://ccpp-techdoc.readthedocs.io/en/v5.0.0/>`_. The model namelist has many settings beyond the physics options that can optimize various aspects of the model for use with each of the supported suites. 
+
+
+..
+   COMMENT: The paragraph above formerly said: "Two of them are variations of an updated version of the physics :term:`suite` used in the operational GFS v15, while the other two are variations of an experimental suite that includes a subset of the developments for the next version of GFS, GFS v16. The variations pertain to how the sea surface temperature (SST) is initialized and parameterized to evolve, and are chosen depending on the type of initial conditions for the App. Initial conditions in :term:`GRIB2` format have a single two-dimensional field to initialize the SST, which must be kept constant throughout the forecast. Initial conditions in :term:`NEMSIO` or :term:`netCDF` format have two two-dimensional fields that describe the baseline SST and its near-surface perturbation related to the diurnal cycle, enabling the use of the near-sea-surface-temperature (NSST) physical parameterization to forecast the temporal variation in SST due to the diurnal cycle." What, if any, of this should be included? 
+
+..
+   COMMENT: It seems like all but the GFS v16 are designed only for high resolution grids... so why are we including them with this release? It seems like GFS v16 would be more appropriate for the 
 
 A scientific description of the CCPP parameterizations and suites can be found in the
 `CCPP Scientific Documentation <https://dtcenter.org/GMTB/v4.1.0/sci_doc>`__, and
-CCPP technical aspects are described in the `CCPP Technical Documentation <https://ccpp-techdoc.readthedocs.io/en/v4.1.0/>`__.
-The model namelists for the physics suites differ in ways that go beyond
+CCPP technical aspects are described in the `CCPP Technical Documentation <https://ccpp-techdoc.readthedocs.io/en/v4.1.0/>`__. The model namelists for the physics suites differ in ways that go beyond
 the physics to optimize various aspects of the model for use with each of the suites.
 The use of :term:`stochastic<Stochastic physics>` processes to represent model uncertainty is an option
-in this release, although the option is off by default in both of the
-supported physics suites. Three methods are supported for use separately or in
-combination: Stochastic Kinetic Energy Backscatter (SKEB), Stochastically
-Perturbed Physics Tendencies (SPPT), and Specific Humidity perturbations (SHUM).
-A `User’s Guide for the use of stochastic physics <https://stochastic-physics.readthedocs.io/en/ufs-v1.1.0>`__ is provided.
+in this release, although the option is off by default in the supported physics suites. Three methods are supported for use separately or in combination: Stochastic Kinetic Energy Backscatter (SKEB), Stochastically Perturbed Physics Tendencies (SPPT), and Specific Humidity perturbations (SHUM).
+A `User’s Guide for the use of stochastic physics <https://stochastic-physics.readthedocs.io/en/ufs-v1.1.0>`__ is provided. Additionally, there are Stochastically Perturbed Parameterizations (SPP) and Land Surface Model (LSM) Stochastically Perturbed Parameterizations. 
 
-The UFS Weather Model ingests files produced by chgres_cube and outputs files
-in netCDF format on a Gaussian grid in the horizontal and model levels in the vertical.
+The UFS Weather Model ingests files produced by ``chgres_cube`` and outputs files
+in netCDF format, which use a Gaussian grid in the horizontal direction and model levels in the vertical direction.
 
 Post-processor
 ================================
 
 The Medium-Range Weather (MRW) Application is distributed with a post-processing tool, the Unified
-Post Processor (UPP). The Unified Post Processor (UPP) converts the
-native netCDF output from the model to the :term:`GRIB2` format on standard isobaric
-coordinates in the vertical. The UPP can also be used to compute a variety of
-useful diagnostic fields, as described in the `UPP user's guide <https://upp.readthedocs.io/en/ufs-v1.1.0>`__.
+Post Processor (:term:`UPP`). The UPP converts the native netCDF output from the model to :term:`GRIB2` format on standard isobaric coordinates in the vertical direction. The UPP can also be used to compute a variety of useful diagnostic fields, as described in the `UPP user's guide <https://upp.readthedocs.io/en/ufs-v1.1.0>`__.
 
-The UPP output can be used with visualization, plotting and verification
-packages, or for further downstream post-processing, e.g. statistical
-post-processing techniques.
+The UPP output can be used with visualization, plotting and verification packages, or for further downstream post-processing (e.g., statistical post-processing techniques).
+
+
+.. _MetplusComponent:
+
+METplus Verification Suite
+=============================
+
+The enhanced Model Evaluation Tools (`METplus <https://dtcenter.org/community-code/metplus>`__) verification system has been integrated into the MRW App to facilitate forecast evaluation. METplus is a verification framework that spans a wide range of temporal scales (warn-on-forecast to climate) and spatial scales (storm to global). It is supported by the `Developmental Testbed Center (DTC) <https://dtcenter.org/>`__. 
+
+METplus is included as part of the standard installation of the MRW prerequistite :term:`spack-stack`. It is also preinstalled on all `Level 1 <https://github.com/ufs-community/ufs-mrweather-app/wiki/Supported-Platforms-and-Compilers-for-MRW-App>`__ systems; existing builds can be viewed `here <https://dtcenter.org/community-code/metplus/metplus-4-1-existing-builds>`__. 
+
+..
+   COMMENT: Is METplus installation supported for the release?
+
+The core components of the METplus framework include the statistical driver, MET, the associated database and display systems known as METviewer and METexpress, and a suite of Python wrappers to provide low-level automation and examples, also called use-cases. MET is a set of verification tools developed for use by the :term:`NWP` community. It matches up grids with either gridded analyses or point observations and applies configurable methods to compute statistics and diagnostics. Extensive documentation is available in the `METplus User’s Guide <https://metplus.readthedocs.io/en/v4.1.0/Users_Guide/overview.html>`__ and `MET User’s Guide <https://met.readthedocs.io/en/main_v10.1/index.html>`__. Documentation for all other components of the framework can be found at the Documentation link for each component on the METplus `downloads <https://dtcenter.org/community-code/metplus/download>`__ page.
+
+Among other techniques, MET provides the capability to compute standard verification scores for comparing deterministic gridded model data to point-based and gridded observations. It also provides ensemble and probabilistic verification methods for comparing gridded model data to point-based or gridded observations. Verification tasks to accomplish these comparisons are defined in the MRW App in :numref:`Table %s <VXWorkflowTasksTable>`. Currently, the MRW App supports the use of :term:`NDAS` observation files in `prepBUFR format <https://nomads.ncep.noaa.gov/pub/data/nccf/com/nam/prod/>`__ (which include conventional point-based surface and upper-air data) for point-based verification. It also supports gridded Climatology-Calibrated Precipitation Analysis (:term:`CCPA`) data for accumulated precipitation evaluation and Multi-Radar/Multi-Sensor (:term:`MRMS`) gridded analysis data for composite reflectivity and :term:`echo top` verification. 
+
+..
+   COMMENT: Add the WorkflowTasksTable to MRW Docs!!!
+
+METplus is being actively developed by :term:`NCAR`/Research Applications Laboratory (RAL), NOAA/Earth Systems Research Laboratories (ESRL), and NOAA/Environmental Modeling Center (EMC), and it is open to community contributions.
+
 
 Visualization Example
 =========================
 
-This release does not include support for model verification or visualization. Currently,
-only four basic NCAR Command Language (:term:`NCL`) scripts are provided to create a basic visualization of model output. This capability is provided only as an example for users familiar with NCL, and may be used to do a visual check to verify that the application is producing reasonable results.
+This release does not include support for model visualization. Currently, only four basic NCAR Command Language (:term:`NCL`) scripts are provided to create a basic visualization of model output. This capability is provided only as an example for users familiar with NCL, and may be used to do a visual check to verify that the application is producing reasonable results.
 
 The scripts are available in the FTP site ftp://ftp.emc.ncep.noaa.gov/EIB/UFS/visualization_example/.
 File visualization_README describes the plotting scripts. Example plots are provided
 for the C96 5-day forecasts initialized on 8/29/2019 00 UTC using :term:`GRIB2`,  :term:`NEMSIO`, or :term:`netCDF` files as input datasets.
 
+..
+   COMMENT: Is this still true?
+
 Workflow and Build System
 ===========================
 The MRW App has a user-friendly workflow and a portable build system that
-invokes the CMake build software before compiling the codes. This release is
+invokes the CMake build software before compiling the code. This release is
 supported for use with Linux and Mac operating systems, with Intel and GNU
 compilers. There is a small set of system libraries that are assumed to be
 present on the target computer, including CMake, a compiler, and the MPI
 library that enables parallelism.
 
+..
+   COMMENT: Is Linus/Mac still supported? Seems like we're not testing it...
+
 A few select computational platforms have been preconfigured for the release
 with all the required libraries for building community releases of
 UFS models and applications available in a central place. That means
-bundled libraries (:term:`NCEPLIBS`) and third-party libraries (:term:`NCEPLIBS-external`),
-including the Earth System Modeling Framework (ESMF)
-have both been built. Applications and models are expected to build and run out of the box.
-In preconfigured platforms, users can proceed directly to the using the
+bundled libraries included in (:term:`spack-stack`) has been built, and the MRW is expected to build and run out of the box. On preconfigured platforms, users can proceed directly to the using the
 workflow, as described in the :ref:`Quick Start chapter <quickstart>`.
 
 A few additional computational platforms are considered configurable for the release.
 Configurable platforms are platforms where all of the required libraries for
 building community releases of UFS models and applications are expected to
 install successfully, but are not available in a central place. Applications and
-models are expected to build and run once the required bundled libraries
-(:term:`NCEPLIBS`) and third-party libraries (:term:`NCEPLIBS-external`) are built.
+models are expected to build and run once the (:term:`spack-stack`) libraries are built.
 
 Limited-test and Build-Only computational platforms are those in which the developers
-have built the code but little or no
-pre-release testing has been conducted, respectively.
+have built the code but little or no pre-release testing has been conducted, respectively.
 A complete description of the levels of support, along with a list of preconfigured
-and configurable platforms can be found `here <https://github.com/ufs-community/ufs/wiki/Supported-Platforms-and-Compilers>`__.
+and configurable platforms can be found `here <https://github.com/ufs-community/ufs-mrweather-app/wiki/Supported-Platforms-and-Compilers-for-MRW-App>`__.
 
 The workflow leverages the Common Infrastructure for Modeling the Earth (:term:`CIME`)
 Case Control System (CCS). As described in the `CIME documentation <http://esmci.github.io/cime/versions/ufs_release_v1.1/html/index.html>`__, it comes with two default configurations, or
