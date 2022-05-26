@@ -12,11 +12,12 @@ Welcome to the UFS Medium-Range Weather App Users Guide!
 
    introduction.rst
    quickstart.rst
-   BuildRunMRW.rst
+   BuildMRW.rst
+   RunMRW.rst
+   components.rst
    repos_and_directories.rst
    inputs_outputs.rst
    graphics.rst
    testing.rst
    faq.rst
-   cime_overview.rst
    glossary

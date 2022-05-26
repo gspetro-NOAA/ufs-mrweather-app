@@ -36,7 +36,7 @@ File paths or code that include angle brackets (e.g., ``build_<platform>_<compil
    COMMENT: Change examples to be MRW-specific.
 
 .. hint:: 
-   * To get started running the MRW App, see the :ref:`Quick Start Guide <quickstart>` for beginners or refer to the in-depth chapter on :ref:`Running the Medium-Range Weather Application <build-run-mrw>`. 
+   * To get started running the MRW App, see the :ref:`Quick Start Guide <quickstart>` for beginners or refer to the in-depth chapter on :ref:`Running the Medium-Range Weather Application <build-mrw>`. 
    * For background information on the MRW App code repositories and directory structure, see :numref:`Section %s <MRWStructure>` below. 
    * For an outline of MRW App components, see section :numref:`Section %s <components-overview>` below or refer to :numref:`Chapter %s <components>` for a more in-depth treatment.
 
@@ -91,7 +91,7 @@ The UFS MRW Application has been designed so that any sufficiently up-to-date ma
 
    * * >40 GB disk space
 
-      * 18 GB input data from GFS, RAP, and HRRR for "out-of-the-box" MRW App case described in :numref:`Chapter %s <build-run-mrw>`
+      * 18 GB input data from GFS, RAP, and HRRR for "out-of-the-box" MRW App case described in :numref:`Chapter %s <build-mrw>`
       * 6 GB for :term:`spack-stack` full installation
       * 1 GB for ufs-mrweather-app installation
       * 11 GB for 120hr/5-day forecast 
@@ -146,8 +146,7 @@ For MacOS systems, some additional software is needed. It is recommended that us
 
 ..
    COMMENT: ADD MacOS-specific software here!!!
-
-More details are in :numref:`Section %s <genericMacOS>`.
+   More details are in :numref:`Section %s <genericMacOS>`.
 
 ..
    COMMENT: Change above to reflect spack-stack details and/or integrate spack-stack docs.
@@ -201,7 +200,7 @@ Unified Post-Processor
 
 The Medium-Range Weather (MRW) Application is distributed with a post-processing tool, the `Unified Post Processor <https://dtcenter.org/community-code/unified-post-processor-upp>`__ (:term:`UPP`). The UPP converts the native netCDF output from the model to :term:`GRIB2` format on standard isobaric coordinates in the vertical direction. The UPP can also be used to compute a variety of useful diagnostic fields, as described in the `UPP User’s Guide <https://upp.readthedocs.io/en/upp-v9.0.0/>`__. The UPP output can be used with visualization, plotting and verification packages, or for further downstream post-processing (e.g., statistical post-processing techniques).
 
-.. _MetplusComponent:
+.. _Metplus:
 
 METplus Verification Suite
 ------------------------------
@@ -224,7 +223,7 @@ The MRW Application has a portable CMake-based build system that packages togeth
 ..
    COMMENT: Is Linux/Mac still supported? Seems like we're not testing it...
 
-This MRW Application release has been tested on a variety of platforms widely used by researchers, including NOAA High-Performance Computing (HPC) systems (e.g. Jet, Gaea), cloud environments, and generic Linux and macOS systems. Four `levels of support <https://github.com/ufs-community/ufs-mrweather-app/wiki/Supported-Platforms-and-Compilers-for-MRW-App>`_ have been defined for the MRW Application. Preconfigured (Level 1) systems already have the required software libraries (*spack-stack*) available in a central location. The MRW Application is expected to build and run out-of-the-box on these systems, and users can :ref:`download the MRW App code <DownloadMRWApp>` without first installing prerequisites. On other platforms, the required libraries will need to be installed as part of the :ref:`MRW Application build <BuildRunMRW>` process. On Level 2 platforms, installation should be straightforward, and the MRW App should build and run successfully. On Level 3 & 4 platforms, users may need to perform additional troubleshooting since little or no pre-release testing has been conducted on these systems.
+This MRW Application release has been tested on a variety of platforms widely used by researchers, including NOAA High-Performance Computing (HPC) systems (e.g. Jet, Gaea), cloud environments, and generic Linux and macOS systems. Four `levels of support <https://github.com/ufs-community/ufs-mrweather-app/wiki/Supported-Platforms-and-Compilers-for-MRW-App>`_ have been defined for the MRW Application. Preconfigured (Level 1) systems already have the required software libraries (*spack-stack*) available in a central location. The MRW Application is expected to build and run out-of-the-box on these systems, and users can :ref:`download the MRW App code <DownloadMRWApp>` without first installing prerequisites. On other platforms, the required libraries will need to be installed as part of the :ref:`MRW Application build <build-mrw>` process. On Level 2 platforms, installation should be straightforward, and the MRW App should build and run successfully. On Level 3 & 4 platforms, users may need to perform additional troubleshooting since little or no pre-release testing has been conducted on these systems.
 
 ..
    COMMENT: What about Level 2 systems?!
@@ -234,7 +233,7 @@ This MRW Application release has been tested on a variety of platforms widely us
 Code Repositories and Directory Structure
 =========================================
 
-.. _HierarchicalRepoStr:
+.. _hierarchical-repo-str:
 
 Hierarchical Repository Structure
 -----------------------------------
@@ -248,7 +247,9 @@ User Support, Documentation, and Contributing Development
 A `forum-based online support system <https://forums.ufscommunity.org>`__ with topical sections
 provides a centralized location for UFS users and developers to post questions and exchange information. The forum complements the distributed documentation, summarized here for ease of use.
 
-.. table::  Centralized list of documentation
+.. _list_of_documentation:
+
+.. table:: Centralized list of documentation
 
    +----------------------------+---------------------------------------------------------------------------------+
    | **Documentation**          | **Location**                                                                    |

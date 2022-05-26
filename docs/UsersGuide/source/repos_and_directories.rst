@@ -25,7 +25,7 @@ The :term:`umbrella repository` for the MRW Application is named ``ufs-mrweather
    | Umbrella repository for       | https://github.com/ufs-community/ufs-weather-model      |
    | the UFS Weather Model         |                                                         |
    +-------------------------------+---------------------------------------------------------+
-   | Repository for the global     |             |
+   | Repository for the global     | https://github.com/NOAA-EMC/global-workflow             |
    | workflow                      |                                                         |
    +-------------------------------+---------------------------------------------------------+
    | Repository for UFS utilities, | https://github.com/ufs-community/UFS_UTILS              |
@@ -69,7 +69,7 @@ settings in the NCEPLIBS ``.gitmodules`` file.
    COMMENT: Edit section above for accuracy...
 
 
-The ``ufs-mrweather-app`` :term:`umbrella repository` structure is determined by the ``local_path`` settings contained within the ``Externals.cfg`` file. After ``manage_externals/checkout_externals`` is run (:numref:`Step %s <CheckoutExternals>`), the specific GitHub repositories described in :numref:`Table %s <top_level_repos>` are cloned into the target subdirectories shown below. Directories that will be created as part of the build process appear in parentheses and will not be visible until after the build is complete. Some directories have been removed for brevity.
+The ``ufs-mrweather-app`` :term:`umbrella repository` structure is determined by the ``local_path`` settings contained within the ``Externals.cfg`` file. After ``manage_externals/checkout_externals`` is run (:numref:`Step %s <checkout-externals>`), the specific GitHub repositories described in :numref:`Table %s <top_level_repos>` are cloned into the target subdirectories shown below. Directories that will be created as part of the build process appear in parentheses and will not be visible until after the build is complete. Some directories have been removed for brevity.
 
 .. code-block:: console
 
@@ -150,7 +150,7 @@ A number of sub-directories are created under the ``global-workflow`` directory 
 
 Experiment Directory Structure
 --------------------------------
-When the user generates an experiment (:numref:`Step %s <GenerateWorkflow>`), a user-defined experimental directory (``EXPTDIR``) is created based on information specified in the ``config.sh`` file. :numref:`Table %s <ExptDirStructure>` shows the contents of the experiment directory before running the experiment workflow.
+When the user generates an experiment (:numref:`Step %s <expt-gen>`), a user-defined experimental directory (``EXPTDIR``) is created based on information specified in the ``config.sh`` file. :numref:`Table %s <ExptDirStructure>` shows the contents of the experiment directory before running the experiment workflow.
 
 ..
    COMMENT: Is this accurate?
@@ -264,7 +264,7 @@ When the user generates an experiment (:numref:`Step %s <GenerateWorkflow>`), a 
    |                           | lines of this file to check the status of the workflow.            |
    +---------------------------+--------------------------------------------------------------------+
 
-The output files for an experiment are described in :numref:`Section %s <OutputFiles>`.
+The output files for an experiment are described in :numref:`Section %s <output>`.
 The workflow tasks are described in :numref:`Section %s <WorkflowTaskDescription>`.
 
 ..

@@ -18,7 +18,7 @@ More information about CIME testing can be found on `CIME: Testing <https://esmc
 Test requirements
 =================
 
-In order to run the tests, NCEPLIBS and NCEPLIBS-external need to be installed (see :numref:`Chapter %s <config_new_platform>` for instructions). These libraries have been preinstalled on Cheyenne, but not on Stampede and Orion.
+In order to run the tests, *spack-stack* must be installed. *spack-stack* has been preinstalled on all `Level 1 <https://github.com/ufs-community/ufs-mrweather-app/wiki/Supported-Platforms-and-Compilers-for-MRW-App>` systems but will need to be installed on all other systems.
 
 The code must have been downloaded before the regression tests can be run. This can be done with the following commands: ::
 

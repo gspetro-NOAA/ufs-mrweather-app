@@ -5,8 +5,9 @@ Inputs and Outputs
 ======================
 
 This chapter provides an overview of the input and output files needed by the components
-of the MRW App (i.e., :term:`chgres_cube`, the UFS :term:`Weather Model`, and :term:`UPP`). Links to more detailed documentation for each of the components are provided.
+of the UFS MRW Application. Links to more detailed documentation for each of the components (e.g., :term:`chgres_cube`, the UFS :term:`Weather Model`, and :term:`UPP`) are provided in the sections below. For MRW App users who want to jump straight to downloading and staging the files, see :numref:`Section %s <downloading_input_data>`. 
 
+.. _input:
 
 Input Files
 ===============
@@ -30,7 +31,7 @@ When a user runs the MRW App as described in the :ref:`Quick Start Guide <quicks
 ``chgres_cube`` is linked from a location on disk to the user's run directory via CIME. The data
 is stored in a hierarchical way in the ``$DIN_LOC_IC`` directory
 (see :numref:`Section %s <downloading_input_data>`). A list of the input files for ``chgres_cube``
-can be found `here <https://ufs-utils.readthedocs.io/en/ufs-v1.0.0/chgres_cube.html#program-inputs-and-outputs>`__.
+can be found `here <https://ufs-utils.readthedocs.io/en/latest/chgres_cube.html>`__.
 
 
 UFS Weather Model
@@ -51,12 +52,12 @@ UPP Input Files
 
 Documentation for the UPP input files can be found `here <https://upp.readthedocs.io/en/ufs-v1.1.0/InputsOutputs.html>`__.
 
+.. _output:
 
 Output files
 ===============
 
-The location of the output files written to disk is determined by CIME
-(see :numref:`Section %s <run_the_case>`).
+The location of the output files written to disk is determined by CIME (see :numref:`Section %s <run_the_case>`).
 
 
 ``chgres_cube``
@@ -101,7 +102,6 @@ Once you have created new flat text files reflecting your changes, you will need
 You may then setup/build/run your case as usual and the UPP will use the new flat ``*.txt`` files.
 
 .. _downloading_input_data:
-
 
 Downloading and Staging Input Data
 ======================================
