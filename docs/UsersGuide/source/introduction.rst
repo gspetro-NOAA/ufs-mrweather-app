@@ -172,10 +172,10 @@ You are now ready to build the MRW App as documented in the :ref:`quickstart`.
 MRW App Components Overview 
 ==============================
 
-Pre-processor Utilities and Initial Conditions
+Pre-Processor Utilities and Initial Conditions
 ------------------------------------------------
 
-The MRW App requires input model data and the :term:`chgres_cube` pre-processing software, which is part of the `UFS_UTILS <https://github.com/ufs-community/UFS_UTILS>`__ pre-processing utilities package, to initialize and prepare the model. Additional information about the pre-processor utilities can be found in :numref:`Chapter %s <utils>` and in the `UFS_UTILS User’s Guide <https://noaa-emcufs-utils.readthedocs.io/en/ufs-v2.0.0/>`_.
+The MRW App requires input model data and the :term:`chgres_cube` pre-processing software, which is part of the `UFS_UTILS <https://github.com/ufs-community/UFS_UTILS>`__ pre-processing utilities package, to initialize and prepare the model. Additional information about the pre-processor utilities can be found in :numref:`Chapter %s <utils>` and in the `UFS_UTILS User’s Guide <https://noaa-emcufs-utils.readthedocs.io/en/ufs-v2.0.0/>`__.
 
 ..
    COMMENT: Check links for paragraph above. 
@@ -185,16 +185,16 @@ Forecast Model
 
 Atmospheric Model
 ^^^^^^^^^^^^^^^^^^^^^^
-The prognostic atmospheric model in the UFS MRW Application is the Finite-Volume Cubed-Sphere
+The prognostic atmospheric model in the UFS MRW Application uses the Finite-Volume Cubed-Sphere
 (:term:`FV3`) dynamical core. The dynamical core is the computational part of a model that solves the equations of fluid motion for the atmospheric component of the UFS Weather Model. A User’s Guide for the UFS :term:`Weather Model` can be found `here <https://ufs-weather-model.readthedocs.io/en/ufs-v2.0.0/>`__. Additional information about the FV3 dynamical core is available at `here <https://noaa-emc.github.io/FV3_Dycore_ufs-v1.1.0/html/index.html>`__.
 
 Common Community Physics Package
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The `Common Community Physics Package <https://dtcenter.org/community-code/common-community-physics-package-ccpp>`_ (:term:`CCPP`) supports interoperable atmospheric physics and land surface model options. Atmospheric physics are a set of numerical methods describing small-scale processes such as clouds, turbulence, radiation, and their interactions. The upcoming MRW App release includes four physics suites. The use of :term:`stochastic<Stochastic physics>` processes to represent model uncertainty is an option in the upcoming release, although the option is off by default in the supported physics suites. 
+The `Common Community Physics Package <https://dtcenter.org/community-code/common-community-physics-package-ccpp>`_ (:term:`CCPP`) supports interoperable atmospheric physics and land surface model options. Atmospheric physics are a set of numerical methods describing small-scale processes such as clouds, turbulence, radiation, and their interactions. The upcoming MRW App release includes four physics suites and :term:`stochastic<Stochastic physics>` options to represent model uncertainty. 
 
 ..
-   COMMENT: It seems like all but the GFS v16 are designed only for high resolution grids... so why are we including them with this release? It seems like GFS v16 would be more appropriate for the 
+   COMMENT: It seems like all but the GFS v16 are designed only for high resolution grids... so why are we including them with this release? It seems like GFS v16 would be more appropriate for the MRW App.
 
 Unified Post-Processor
 -------------------------
@@ -239,7 +239,8 @@ Code Repositories and Directory Structure
 Hierarchical Repository Structure
 -----------------------------------
 
-
+..
+   COMMENT: Update this from code repos dirs doc!
 
 
 User Support, Documentation, and Contributing Development

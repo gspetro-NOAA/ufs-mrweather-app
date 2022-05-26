@@ -4,6 +4,41 @@
 Build and Run the Medium-Range Weather (MRW) Application 
 ===========================================================
 
+The Unified Forecast System (:term:`UFS`) Short-Range Weather (SRW) Application is an :term:`umbrella repository` consisting of a number of different :ref:`components <Components>` housed in external repositories. Once the SRW App is configured and built, users can generate predictions of atmospheric behavior over a limited spatial area and on time scales ranging from minutes out to several days. 
+
+This chapter walks users through how to build and run the "out-of-the-box" case for the SRW App. However, the steps are relevant to any SRW Application experiment and can be modified to suit user goals. The "out-of-the-box" SRW App case builds a weather forecast for June 15-16, 2019. Multiple convective weather events during these two days produced over 200 filtered storm reports. Severe weather was clustered in two areas: the Upper Midwest through the Ohio Valley and the Southern Great Plains. This forecast uses a predefined 25-km Continental United States (:term:`CONUS`) domain (RRFS_CONUS_25km), the Global Forecast System (:term:`GFS`) version 15.2 physics suite (FV3_GFS_v16 :term:`CCPP`), and :term:`FV3`-based GFS raw external model data for initialization.
+
+.. attention::
+
+   All UFS applications support `four platform levels <https://github.com/ufs-community/ufs-srweather-app/wiki/Supported-Platforms-and-Compilers>`_. The steps described in this chapter will work most smoothly on preconfigured (Level 1) systems. On Level 1 systems, all of the required libraries for building community releases of UFS models and applications are available in a central location. This guide can serve as a starting point for running the SRW App on other systems, too, but the user may need to perform additional troubleshooting. 
+
+.. note::
+   The :ref:`container approach <QuickstartC>` is recommended for a smoother build and run experience. Building without a container allows for the use of the Rocoto workflow manager and may allow for more customization. However, the non-container approach requires more in-depth system-based knowledge, especially on Level 3 and 4 systems; it is less appropriate for beginners. 
+
+The overall procedure for generating an experiment is shown in :numref:`Figure %s <AppOverallProc>`, with the scripts to generate and run the workflow shown in red. The steps are as follows:
+
+   * :ref:`Install prerequisites <HPCstackInfo>`
+   * :ref:`Clone the SRW App from GitHub <DownloadSRWApp>`
+   * :ref:`Check out the external repositories <CheckoutExternals>`
+   * :ref:`Set up the build environment and build the executables <BuildExecutables>`
+   * :ref:`Download and stage data <Data>`
+   * :ref:`Optional: Configure a new grid <GridSpecificConfig>`
+   * :ref:`Generate a regional workflow experiment <GenerateForecast>`
+      * :ref:`Configure the experiment parameters <UserSpecificConfig>`
+      * :ref:`Load the python environment for the regional workflow <SetUpPythonEnv>`
+   * :ref:`Run the regional workflow <RocotoRun>` 
+   * :ref:`Optional: Plot the output <PlotOutput>`
+
+.. _AppOverallProc:
+
+.. figure:: _static/FV3LAM_wflow_overall.png
+
+   *Overall layout of the SRW App Workflow*
+
+..
+   COMMENT: Edit section to make it MRW-specific!!! Thus far just copy-pasted from SRW. 
+
+
 Install *spack-stack*
 =======================
 
@@ -42,7 +77,7 @@ The cloned repository contains the configuration files and sub-directories shown
 
 .. _FilesAndSubDirs:
 
-.. table::  Files and sub-directories of the ufs-mrweather-app repository
+.. table:: Files and sub-directories of the ufs-mrweather-app repository
 
    +--------------------------+--------------------------------------------------------------+
    | **File/Directory Name**  | **Description**                                              |
@@ -88,6 +123,16 @@ Determine whether checkout of externals was successful using:
    
    ./manage_externals/checkout_externals -S
 
+.. _get-data:
+
+Download and Stage the Data
+===============================
+
+The MRW App requires input files to run. These include static datasets, initial and boundary conditions files, and model configuration files. On Level 1 and 2 systems, the data required to run MRW App tests are already available. For Level 3 and 4 systems, the data must be added. Detailed instructions on how to add the data can be found in :numref:`Section %s Downloading and Staging Input Data <DownloadingStagingInput>`. :numref:`Sections %s <Input>` and :numref:`%s <OutputFiles>` contain useful background information on the input and output files used in the MRW App.
+
+..
+   COMMENT: Edit to reflect MRW reality, not SRW. e.g., are IC/LBCs required?
+
 
 Set Up the Environment and Build the Executables
 ===================================================
@@ -101,17 +146,16 @@ sh build_global-workflow.sh [-c]
 (ONLY use the -c option to compile for coupled UFS; requires different physics packages and APP argument when running setup_expt.py in step 5. )
 
 
-Create a ``COMROT`` and ``EXPDIR``. The experiment and workflow set-up scripts in following steps will point to these paths. Initial conditions will also need to be placed in COMROT.
+Create a ``COMROT`` and ``EXPDIR``. The experiment and workflow set-up scripts in following steps will point to these paths. Initial conditions will also need to be placed in ``COMROT``.
 
 
 
-Download and Stage the Data
-===============================
 
-The MRW App requires input files to run. These include static datasets, initial and boundary conditions files, and model configuration files. On Level 1 and 2 systems, the data required to run MRW App tests are already available. For Level 3 and 4 systems, the data must be added. Detailed instructions on how to add the data can be found in :numref:`Section %s Downloading and Staging Input Data <DownloadingStagingInput>`. :numref:`Sections %s <Input>` and :numref:`%s <OutputFiles>` contain useful background information on the input and output files used in the MRW App.
+Helpful documentation: https://github.com/NOAA-EMC/global-workflow/wiki/Run-Global-Workflow
 
-..
-   COMMENT: Edit to reflect MRW reality, not SRW. e.g., are IC/LBCs required?
+
+
+
 
 Grid Configuration
 ======================
@@ -124,43 +168,211 @@ Generate the Forecast Experiment
 
 Run experiment generator script:
 
-cd ufs-mrweather-app/global-workflow/ush/rocoto
-[on Orion] module load contrib/0.1; module load rocoto/1.3.3
-[on Hera] module use -a /contrib/anaconda/modulefiles
-        module load anaconda/anaconda3-5.3.1
+.. code-block:: console
 
-./setup_expt.py forecast-only --pslot $EXP_NAME --idate YYYYMMDDCC --edate YYYYMMDDCC--resdet desired_resolution --gfs_cyc 4 --comrot $PATH_TO_YOUR_COMROT_DIR --expdir $PATH_TO_YOUR_EXPDIR
+   cd ufs-mrweather-app/global-workflow/ush/rocoto
+   [on Orion] module load contrib/0.1; module load rocoto/1.3.3
+   [on Hera] module use -a /contrib/anaconda/modulefiles
+   module load anaconda/anaconda3-5.3.1
+   ./setup_expt.py forecast-only --pslot $EXP_NAME --idate YYYYMMDDCC --edate YYYYMMDDCC--resdet desired_resolution --gfs_cyc 4 --comrot $PATH_TO_YOUR_COMROT_DIR --expdir $PATH_TO_YOUR_EXPDIR
 
-(example with COMROT and EXPDIR paths)
-./setup_expt.py forecast-only --pslot test --idate 2020010100 --edate 2020010118 --resdet 384 --gfs_cyc 4 --comrot /work/noaa/stmp/cbook/COMROT --expdir /work/noaa/epic-ps/cbook/uncoupled/EXPDIR
 
-This will generate $PSLOT (specific experiment name) folders in COMROT and EXPDIR, with config files in $EXPDIR/$PSLOT
+Example with ``COMROT`` and ``EXPDIR`` paths: 
 
-Copy IC files into COMROT/$PSLOT. Directory name should be like: gfs.YYYYMMDDCC, with structure: gfs.$YYYYMMDD/CC/atmos. INPUT folder within …/atmos/ contains sfc files needed for GFS ATM to run.
-Edit config.base in $EXPDIR/$PSLOT (ACCOUNT, HOMEDIR, STMP/PTMP, HPSSARCH)
+.. code-block:: console
 
-Run ./setup_workflow_fcstonly.py --expdir $EXPDIR/$PSLOT
-This will generate crontab and xml files for the experiment in $EXPDIR/$PSLOT.
+   ./setup_expt.py forecast-only --pslot test --idate 2020010100 --edate 2020010118 --resdet 384 --gfs_cyc 4 --comrot /work/noaa/stmp/cbook/COMROT --expdir /work/noaa/epic-ps/cbook/uncoupled/EXPDIR
+
+This will generate ``$PSLOT`` (specific experiment name) folders in ``COMROT`` and ``EXPDIR``, with config files in ``$EXPDIR/$PSLOT``
+
+Copy IC files into ``COMROT/$PSLOT``. Directory name should be like: gfs.YYYYMMDDCC, with structure: gfs.$YYYYMMDD/CC/atmos. INPUT folder within …/atmos/ contains sfc files needed for GFS ATM to run.
+Edit ``config.base`` in ``$EXPDIR/$PSLOT`` (``ACCOUNT``, ``HOMEDIR``, ``STMP/PTMP``, ``HPSSARCH``)
+
+Run ``./setup_workflow_fcstonly.py --expdir $EXPDIR/$PSLOT``. This will generate crontab and ``.xml`` files for the experiment in $EXPDIR/$PSLOT.
+
+
+Description of Workflow Tasks
+---------------------------------
+
+.. note::
+   This section gives a general overview of workflow tasks. To begin running the workflow, skip to :numref:`Step %s <rocoto-run>`
+
+:numref:`Figure %s <WorkflowTasksFig>` illustrates the overall workflow. Individual tasks that make up the workflow are specified in the ``FV3LAM_wflow.xml`` file. :numref:`Table %s <WorkflowTasksTable>` describes the function of each baseline task. The first three pre-processing tasks; ``MAKE_GRID``, ``MAKE_OROG``, and ``MAKE_SFC_CLIMO`` are optional. If the user stages pre-generated grid, orography, and surface climatology fix files, these three tasks can be skipped by adding the following lines to the ``config.sh`` file before running the ``generate_FV3LAM_wflow.sh`` script: 
+
+.. code-block:: console
+
+   RUN_TASK_MAKE_GRID="FALSE"
+   RUN_TASK_MAKE_OROG="FALSE"
+   RUN_TASK_MAKE_SFC_CLIMO="FALSE"
+
+..
+   COMMENT: Update info to match MRW App! This is all SRW. 
+
+
+.. _WorkflowTasksFig:
+
+.. figure:: _static/FV3LAM_wflow_flowchart_v2.png
+
+    *Flowchart of the workflow tasks*
+
+..
+   COMMENT: Make an MRW App workflow chart if possible! Otherwise, delete. 
+
+
+The ``setup_expt.py`` file runs the specific j-job scripts (``global-workflow/jobs/J[task_name]``) in the prescribed order when the experiment is launched via ``setup_workflow.py`` or the ``rocotorun`` command. Each j-job task has its own source script (or "ex-script") named ``ex[task_name].sh`` in the ``global-workflow/scripts`` directory. Two database files named ``FV3LAM_wflow.db`` and ``FV3LAM_wflow_lock.db`` are generated and updated by the Rocoto calls. There is usually no need for users to modify these files. To relaunch the workflow from scratch, delete these two ``*.db`` files and then call the launch script repeatedly for each task. 
+
+..
+   COMMENT: Fix above paragraph to have MRW-specific info instead of SRW!!! Verify any changes made!
+
+
+.. _WorkflowTasksTable:
+
+.. table::  Baseline workflow tasks in the SRW App
+
+   +----------------------+------------------------------------------------------------+
+   | **Workflow Task**    | **Task Description**                                       |
+   +======================+============================================================+
+   |||
+   +----------------------+------------------------------------------------------------+
+   |||
+   +----------------------+------------------------------------------------------------+
+   | run_fcst             | Run the forecast model (UFS weather model)                 |
+   +----------------------+------------------------------------------------------------+
+   | run_post             | Run the post-processing tool (UPP)                         |
+   +----------------------+------------------------------------------------------------+
+
+..
+   COMMENT: Get workflow steps/order!!! (Look in global-workflow repo & talk to Cameron)
+
+In addition to the baseline tasks described in :numref:`Table %s <WorkflowTasksTable>` above, users may choose to run some or all of the METplus verification tasks. These tasks are described in :numref:`Table %s <VXWorkflowTasksTable>` below. 
+
+.. _VXWorkflowTasksTable:
+
+.. table:: Verification (VX) workflow tasks in the SRW App
+
+   +-----------------------+------------------------------------------------------------+
+   | **Workflow Task**     | **Task Description**                                       |
+   +=======================+============================================================+
+   | GET_OBS_CCPA          | Retrieves and organizes hourly :term:`CCPA` data from NOAA |
+   |                       | HPSS. Can only be run if ``RUN_TASK_GET_OBS_CCPA="TRUE"``  |
+   |                       | *and* user has access to NOAA HPSS data.                   |
+   +-----------------------+------------------------------------------------------------+
+   | GET_OBS_NDAS          | Retrieves and organizes hourly :term:`NDAS` data from NOAA |
+   |                       | HPSS. Can only be run if ``RUN_TASK_GET_OBS_NDAS="TRUE"``  |
+   |                       | *and* user has access to NOAA HPSS data.                   |
+   +-----------------------+------------------------------------------------------------+
+   | GET_OBS_MRMS          | Retrieves and organizes hourly :term:`MRMS` composite      |
+   |                       | reflectivity and :term:`echo top` data from NOAA HPSS. Can |
+   |                       | only be run if ``RUN_TASK_GET_OBS_MRMS="TRUE"`` *and* user |
+   |                       | has access to NOAA HPSS data.                              |
+   +-----------------------+------------------------------------------------------------+
+   | VX_GRIDSTAT           | Runs METplus grid-to-grid verification for 1-h accumulated |
+   |                       | precipitation                                              |
+   +-----------------------+------------------------------------------------------------+
+   | VX_GRIDSTAT_REFC      | Runs METplus grid-to-grid verification for composite       |
+   |                       | reflectivity                                               |
+   +-----------------------+------------------------------------------------------------+
+   | VX_GRIDSTAT_RETOP     | Runs METplus grid-to-grid verification for :term:`echo top`|
+   +-----------------------+------------------------------------------------------------+
+   | VX_GRIDSTAT_##h       | Runs METplus grid-to-grid verification for 3-h, 6-h, and   |
+   |                       | 24-h (i.e., daily) accumulated precipitation. Valid values |
+   |                       | of ``##`` are ``03``, ``06``, and ``24``.                  |
+   +-----------------------+------------------------------------------------------------+
+   | VX_POINTSTAT          | Runs METplus grid-to-point verification for surface and    |
+   |                       | upper-air variables                                        |
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSGRID            | Runs METplus grid-to-grid ensemble verification for 1-h    |
+   |                       | accumulated precipitation. Can only be run if              |
+   |                       | ``DO_ENSEMBLE="TRUE"`` and ``RUN_TASK_VX_ENSGRID="TRUE"``. |
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSGRID_REFC       | Runs METplus grid-to-grid ensemble verification for        |
+   |                       | composite reflectivity. Can only be run if                 |
+   |                       | ``DO_ENSEMBLE="TRUE"`` and                                 |
+   |                       | ``RUN_TASK_VX_ENSGRID = "TRUE"``.                          |
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSGRID_RETOP      | Runs METplus grid-to-grid ensemble verification for        |
+   |                       | :term:`echo top`. Can only be run if ``DO_ENSEMBLE="TRUE"``|
+   |                       | and ``RUN_TASK_VX_ENSGRID="TRUE"``.                        |
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSGRID_##h        | Runs METplus grid-to-grid ensemble verification for 3-h,   |
+   |                       | 6-h, and 24-h (i.e., daily) accumulated precipitation.     |
+   |                       | Valid values of ``##`` are ``03``, ``06``, and ``24``. Can |
+   |                       | only be run if ``DO_ENSEMBLE="TRUE"`` and                  |
+   |                       | ``RUN_TASK_VX_ENSGRID="TRUE"``.                            |
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSGRID_MEAN       | Runs METplus grid-to-grid verification for ensemble mean   |
+   |                       | 1-h accumulated precipitation. Can only be run if          |
+   |                       | ``DO_ENSEMBLE="TRUE"`` and ``RUN_TASK_VX_ENSGRID="TRUE"``. |
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSGRID_PROB       | Runs METplus grid-to-grid verification for 1-h accumulated |
+   |                       | precipitation probabilistic output. Can only be run if     |
+   |                       | ``DO_ENSEMBLE="TRUE"`` and ``RUN_TASK_VX_ENSGRID="TRUE"``. |
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSGRID_MEAN_##h   | Runs METplus grid-to-grid verification for ensemble mean   |
+   |                       | 3-h, 6-h, and 24h (i.e., daily) accumulated precipitation. |
+   |                       | Valid values of ``##`` are ``03``, ``06``, and ``24``. Can |
+   |                       | only be run if ``DO_ENSEMBLE="TRUE"`` and                  |
+   |                       | ``RUN_TASK_VX_ENSGRID="TRUE"``.                            |
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSGRID_PROB_##h   | Runs METplus grid-to-grid verification for 3-h, 6-h, and   |
+   |                       | 24h (i.e., daily) accumulated precipitation probabilistic  |
+   |                       | output. Valid values of ``##`` are ``03``, ``06``, and     |
+   |                       | ``24``. Can only be run if ``DO_ENSEMBLE="TRUE"`` and      |
+   |                       | ``RUN_TASK_VX_ENSGRID="TRUE"``.                            |
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSGRID_PROB_REFC  | Runs METplus grid-to-grid verification for ensemble        |
+   |                       | probabilities for composite reflectivity. Can only be run  |
+   |                       | if ``DO_ENSEMBLE="TRUE"`` and                              |
+   |                       | ``RUN_TASK_VX_ENSGRID="TRUE"``.                            |
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSGRID_PROB_RETOP | Runs METplus grid-to-grid verification for ensemble        |
+   |                       | probabilities for :term:`echo top`. Can only be run if     |
+   |                       | ``DO_ENSEMBLE="TRUE"`` and ``RUN_TASK_VX_ENSGRID="TRUE"``. | 
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSPOINT           | Runs METplus grid-to-point ensemble verification for       |
+   |                       | surface and upper-air variables. Can only be run if        |
+   |                       | ``DO_ENSEMBLE="TRUE"`` and ``RUN_TASK_VX_ENSPOINT="TRUE"``.|
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSPOINT_MEAN      | Runs METplus grid-to-point verification for ensemble mean  |
+   |                       | surface and upper-air variables. Can only be run if        |
+   |                       | ``DO_ENSEMBLE="TRUE"`` and ``RUN_TASK_VX_ENSPOINT="TRUE"``.|
+   +-----------------------+------------------------------------------------------------+
+   | VX_ENSPOINT_PROB      | Runs METplus grid-to-point verification for ensemble       |
+   |                       | probabilities for surface and upper-air variables. Can     |
+   |                       | only be run if ``DO_ENSEMBLE="TRUE"`` and                  |
+   |                       | ``RUN_TASK_VX_ENSPOINT="TRUE"``.                           |
+   +-----------------------+------------------------------------------------------------+
+
 
 
 Run the Workflow 
 ================================
 
+.. _rocoto-run:
+
 Run Using Rocoto
 --------------------
 
-Submit job through crontab by copying entry in $PSLOT.crontab into crontab via crontab -e.
+Submit job through crontab by copying entry in ``$PSLOT.crontab`` into crontab via ``crontab -e``.
 
 Monitor status of workflow using rocotostat:
 
-rocotostat -d /path/to/workflow/database/file -w /path/to/workflow/xml/file [-c YYYYMMDDCCmm,[YYYYMMDDCCmm,...]] [-t taskname,[taskname,...]] [-s] [-T]
-e.g.: rocotostat -d $PSLOT.db -w $PSLOT.xml
+.. code-block:: console
+
+   rocotostat -d /path/to/workflow/database/file -w /path/to/workflow/xml/file [-c YYYYMMDDCCmm,[YYYYMMDDCCmm,...]] [-t taskname,[taskname,...]] [-s] [-T]
+
+For example: 
+.. code-block:: console
+   
+   rocotostat -d $PSLOT.db -w $PSLOT.xml
 
 Check status of specific task/job:
 
-rocotocheck -d /path/to/workflow/database/file -w /path/to/workflow/xml/file -c YYYYMMDDCCmm -t taskname
+.. code-block:: console
+   rocotocheck -d </path/to/workflow/database/file> -w </path/to/workflow/xml/file> -c YYYYMMDDCCmm -t taskname
 
 
+.. _manual-run:
 
 Run Manually (Without Rocoto)
 ---------------------------------
@@ -169,14 +381,7 @@ Run Manually (Without Rocoto)
 
 Plot the Output
 ===================
-
-
-
-
-
-
-
-Helpful documentation: https://github.com/NOAA-EMC/global-workflow/wiki/Run-Global-Workflow
+Two python scripts are provided to generate plots from the post-processed :term:`GRIB2` output. Information on how to generate the graphics can be found in :numref:`Chapter %s <graphics>`.
 
 
 

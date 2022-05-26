@@ -5,36 +5,38 @@ Inputs and Outputs
 ======================
 
 This chapter provides an overview of the input and output files needed by the components
-of the MRW App (:term:`chgres_cube`, the UFS :term:`Weather Model`, and :term:`UPP`).  Links to more
-detailed documentation for each of the components are provided.
+of the MRW App (i.e., :term:`chgres_cube`, the UFS :term:`Weather Model`, and :term:`UPP`). Links to more detailed documentation for each of the components are provided.
 
 
 Input Files
 ===============
 
-The MRW App requires numerous input files.
-The input files data format can be
-`GRIB2 <https://www.nco.ncep.noaa.gov/pmb/docs/grib2/>`__,
-`NEMSIO <https://github.com/NOAA-EMC/NCEPLIBS-nemsio/wiki/Home-NEMSIO>`__, or
-`netCDF <https://www.unidata.ucar.edu/software/netcdf/>`__, and the input files
-must be staged by the user. :term:`CIME` can
+The MRW App requires numerous input files. The input files data format can be in: 
+   * `GRIB2 <https://www.nco.ncep.noaa.gov/pmb/docs/grib2/>`__ format,
+   * `NEMSIO <https://github.com/NOAA-EMC/NCEPLIBS-nemsio/wiki/Home-NEMSIO>`__ format, or
+   * `netCDF <https://www.unidata.ucar.edu/software/netcdf/>`__ format. 
+
+Users must download the input files if they are not working on a Level 1 or 2 system. :term:`CIME` can
 run the end-to-end system and write output files to disk.
 
+..
+   COMMENT: Is the data already available on Level 2 systems? Delete CIME comment? Or alter?
 
-chgres_cube
---------------
 
-When a user runs the MRW App as described in the quickstart guide, input data for
-chgres_cube is linked from a location on disk to your run directory via CIME. The data
+``chgres_cube``
+------------------
+
+When a user runs the MRW App as described in the :ref:`Quick Start Guide <quickstart>`, input data for
+``chgres_cube`` is linked from a location on disk to the user's run directory via CIME. The data
 is stored in a hierarchical way in the ``$DIN_LOC_IC`` directory
-(see :numref:`Section %s <downloading_input_data>`). A list of the input files for chgres_cube
+(see :numref:`Section %s <downloading_input_data>`). A list of the input files for ``chgres_cube``
 can be found `here <https://ufs-utils.readthedocs.io/en/ufs-v1.0.0/chgres_cube.html#program-inputs-and-outputs>`__.
 
 
 UFS Weather Model
 --------------------
 
-The input files for the UFS Weather Model are located one directory up from the chgres_cube
+The input files for the UFS Weather Model are located one directory up from the ``chgres_cube``
 input files in ``$RUNDIR`` (see :numref:`Section %s <run_the_case>`). An extensive description
 of the input files for the UFS Weather Model can be found in the `UFS Weather Model Users Guide
 <https://ufs-weather-model.readthedocs.io/en/ufs-v1.1.0>`__.
@@ -60,7 +62,7 @@ The location of the output files written to disk is determined by CIME
 ``chgres_cube``
 -------------------
 
-The files output by chgres_cube reside in the ``$DIN_LOC_IC`` directory, and are linked by CIME to
+The files output by ``chgres_cube`` reside in the ``$DIN_LOC_IC`` directory, and are linked by CIME to
 files that include the grid name and date in the same directory.  For example:
 
 .. code-block:: console
@@ -302,14 +304,14 @@ The data should be placed in ``$DIN_LOC_IC``.
          ln -s gfs.t${hh}z.atmf000.nc atm.input.ic.nc
          ln -s gfs.t${hh}z.sfcf000.nc sfc.input.ic.nc
 
----------------------
-Order of operations
+
+Order of Operations
 ---------------------
 
 If you want to download the input data manually, you should do it before you build the MRW App.
 
--------------------------------------------------
-Coexistence of multiple files for the same date
+
+Coexistence of Multiple Files for the Same Date
 -------------------------------------------------
 
 Directory `$DIN_LOC_IC/YYMMMM/YYYYMMDD` can have GRIB2, NEMSIO, and netCDF files for
@@ -326,8 +328,8 @@ and add
     input_type = "gaussian_nemsio" for NEMSIO
     input_type = "gaussian_netcdf" for netCDF
 
------------------------------------------------------------------
-Best practices for conserving disk space and keeping files safe
+
+Best Practices for Conserving Disk Space and Keeping Files Safe
 -----------------------------------------------------------------
 
 Initial condition files are large and can occupy a significant amount of disk space.
