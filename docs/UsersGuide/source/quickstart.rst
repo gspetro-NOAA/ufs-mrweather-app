@@ -84,7 +84,7 @@ Running the UFS Medium-Range Weather Application
 
    .. attention::
 
-      ``--idate`` and ``--edate`` must be the *same* when running in :term:`free-forecast` mode and refer to the initial start time of the experiment. 
+      ``--idate`` and ``--edate`` must be the *same* when running in :term:`free-forecast` mode and must refer to the initial start time of the experiment. 
 
    This will generate $PSLOT (specific experiment name) folders in ``COMROT`` and ``EXPDIR``, with a collection of ``config`` files in ``$EXPDIR/$PSLOT``.
 
