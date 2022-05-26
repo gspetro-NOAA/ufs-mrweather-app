@@ -18,8 +18,8 @@ Building the UFS Medium-Range Weather Application
 
       git clone -b master https://github.com/ufs-community/ufs-mrweather-app.git
 
-..
-   COMMENT: Change branch for release.
+   ..
+      COMMENT: Change branch for release.
 
 #. Check out the external repositories:
 
@@ -33,6 +33,9 @@ Building the UFS Medium-Range Weather Application
    .. code-block:: console
       
       sh build_global-workflow.sh
+
+Running the UFS Medium-Range Weather Application 
+=========================================================
 
 #. Download and stage data according to the instructions in :numref:`Chapter %s <downloading_input_data>` (if using new data or when operating on a Level 2-4 system).
 
@@ -98,8 +101,8 @@ Building the UFS Medium-Range Weather Application
 
 #. Edit ``config.base`` in ``$EXPDIR/$PSLOT``. In particular, users will need to modify the following parameters: ACCOUNT, HOMEDIR, STMP, PTMP, HPSSARCH, SDATE, EDATE, and the length of the forecast. 
 
-..
-   COMMENT: HOW to update length of forecast??? What variable?
+   ..
+      COMMENT: HOW to update length of forecast??? What variable?
 
 #. Run the following to generate a crontab and ``.xml`` files for the experiment in ``$EXPDIR/$PSLOT``:
 
@@ -116,7 +119,7 @@ Building the UFS Medium-Range Weather Application
       rocotostat -d </path/to/workflow/database/file> -w </path/to/workflow/xml/file> [-c YYYYMMDDHHmm,[YYYYMMDDHHmm,...]] [-t taskname,[taskname,...]] [-s] [-T]
    
    where ``-c`` and ``-t`` are optional arguments referring to the cycle and task name, respectively. 
-   
+
    ..
       COMMENT: What are the -s and -T options?
 
