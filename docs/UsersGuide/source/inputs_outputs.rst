@@ -12,17 +12,12 @@ of the UFS MRW Application. Links to more detailed documentation for each of the
 Input Files
 ===============
 
-The MRW App requires numerous input files. The input files data format can be in: 
+The MRW Application requires numerous input files to run: static datasets (fix files containing climatological information, terrain and land use data), initial conditions files, and model configuration files (such as namelists). The input data files can be in: 
    * `GRIB2 <https://www.nco.ncep.noaa.gov/pmb/docs/grib2/>`__ format,
    * `NEMSIO <https://github.com/NOAA-EMC/NCEPLIBS-nemsio/wiki/Home-NEMSIO>`__ format, or
    * `netCDF <https://www.unidata.ucar.edu/software/netcdf/>`__ format. 
 
-Users must download the input files if they are not working on a Level 1 or 2 system. :term:`CIME` can
-run the end-to-end system and write output files to disk.
-
-..
-   COMMENT: Is the data already available on Level 2 systems? Delete CIME comment? Or alter?
-
+Users must download the input files if they are not working on a Level 1 system. 
 
 ``chgres_cube``
 ------------------
@@ -31,7 +26,7 @@ When a user runs the MRW App as described in the :ref:`Quick Start Guide <quicks
 ``chgres_cube`` is linked from a location on disk to the user's run directory via CIME. The data
 is stored in a hierarchical way in the ``$DIN_LOC_IC`` directory
 (see :numref:`Section %s <downloading_input_data>`). A list of the input files for ``chgres_cube``
-can be found `here <https://ufs-utils.readthedocs.io/en/latest/chgres_cube.html>`__.
+can be found `here <https://ufs-utils.readthedocs.io/en/latest/chgres_cube.html#program-inputs-and-outputs>`__.
 
 
 UFS Weather Model
@@ -106,20 +101,10 @@ You may then setup/build/run your case as usual and the UPP will use the new fla
 Downloading and Staging Input Data
 ======================================
 
-A set of input files, including static (fix) data and raw initial conditions, are needed to run the MR
-Weather App. There are two variables that describe the location of the static and initial condition files:
-``$DIN_LOC_ROOT`` is the directory where the static files are located and ``$DIN_LOC_IC`` is the
-directory where the initial conditions are located. By default, ``$DIN_LOC_ROOT`` is set to
-$UFS_INPUT/ufs_inputdata and ``$DIN_LOC_IC`` is set to ``$DIN_LOC_ROOT/icfiles``.
-In this directory, the initial conditions are located in subdirectories named ``YYYYMM/YYYYMMDD`` (YYYY: year, MM: month, DD: day).
+A set of input files, including static (fix) data and raw initial conditions, are needed to run the MR Weather App. There are two variables that describe the location of the static and initial condition files: ``$DIN_LOC_ROOT`` is the directory where the static files are located and ``$DIN_LOC_IC`` is the directory where the initial conditions are located. By default, ``$DIN_LOC_ROOT`` is set to $UFS_INPUT/ufs_inputdata and ``$DIN_LOC_IC`` is set to ``$DIN_LOC_ROOT/icfiles``. In this directory, the initial conditions are located in subdirectories named ``YYYYMM/YYYYMMDD`` (YYYY: year, MM: month, DD: day).
 
 Variable ``$DIN_LOC_ROOT`` is already set in preconfigured platforms and points
-to a centralized location where the fix files are staged.
-Similarly, variable ``$DIN_LOC_IC`` is by default set to ``$DIN_LOC_ROOT/icfiles`` and
-points to the directory with initial conditions for the Hurricane Dorian
-initialization in 08-29-2019. In all other platforms, users can customize the
-location of the fix files by setting `$UFS_INPUT` to a writable directory and
-creating a subdirectory $UFS_INPUT/ufs_inputdata.
+to a centralized location where the fix files are staged. Similarly, variable ``$DIN_LOC_IC`` is by default set to ``$DIN_LOC_ROOT/icfiles`` and points to the directory with initial conditions for the Hurricane Dorian initialization in 08-29-2019. In all other platforms, users can customize the location of the fix files by setting `$UFS_INPUT` to a writable directory and creating a subdirectory $UFS_INPUT/ufs_inputdata.
 
 A customized location for ``$DIN_LOC_IC`` is necessary when users need to stage new
 initial condition files and do not have write permission to ``$DIN_LOC_ROOT``.

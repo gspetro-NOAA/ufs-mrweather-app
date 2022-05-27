@@ -43,7 +43,7 @@ Running the UFS Medium-Range Weather Application
 
    .. code-block:: console
    
-      cd ufs-mrweather-app/global-workflow/ush/rocoto
+      cd path/to/ufs-mrweather-app/global-workflow/ush/rocoto
 
    On Orion:
 
@@ -77,32 +77,26 @@ Running the UFS Medium-Range Weather Application
 
    .. code-block:: console
       
-      ./setup_expt.py forecast-only --pslot test --idate 2020010100 --edate 2020010118 --resdet 384 --gfs_cyc 4 --comrot /work/noaa/stmp/cbook/COMROT --expdir /work/noaa/epic-ps/cbook/uncoupled/EXPDIR
-
-   ..
-      COMMENT: Should probably use different sample paths or otherwise replace cbook with ilastname. 
+      ./setup_expt.py forecast-only --pslot test --idate 2020010100 --edate 2020010118 --resdet 384 --gfs_cyc 4 --comrot /home/$USER/COMROT --expdir /home/$USER/uncoupled/EXPDIR
 
    .. attention::
 
       ``--idate`` and ``--edate`` must be the *same* when running in :term:`free-forecast` mode and must refer to the initial start time of the experiment. 
 
-   This will generate $PSLOT (specific experiment name) folders in ``COMROT`` and ``EXPDIR``, with a collection of ``config`` files in ``$EXPDIR/$PSLOT``.
+   This will generate ``COMROT`` and ``EXPDIR`` directories. Additionally, it will create a ``$PSLOT`` (specific experiment name) subdirectory within ``COMROT`` and ``EXPDIR`` and a collection of ``config`` files in ``$EXPDIR/$PSLOT``.
 
-#. Copy initial conditions (IC) files into ``$COMROT/$PSLOT``. 
+#. Copy initial conditions (:term:`IC`) files into ``$COMROT/$PSLOT``. 
 
    .. code-block:: console
       
       cp <ICfile> $COMROT/$PSLOT
    
-   where <ICfile> refers to a given IC file. An entire directory of IC files can be copied by adding the ``-r`` argument. These files should be within a directory named following the ``gfs.YYYYMMDDHH`` convention with a filename structure like ``gfs.$YYYYMMDD/HH/atmos``. The INPUT folder within ``.../atmos/`` contains ``sfc`` files needed for the GFS ATM to run.
+   where **<ICfile>** refers to a given IC file (copy an entire directory by adding the ``-r`` argument). These files should be placed within a directory named according to the ``gfs.YYYYMMDDHH`` convention with a filename structure like ``gfs.$YYYYMMDD/HH/atmos/INPUT``. The INPUT folder within ``.../atmos/`` contains ``sfc`` files needed for the Global Forecast System (:term:`GFS`) atmospheric model (:term:`ATM`) to run.
 
    ..
-      COMMENT: What is the GFS ATM? GFS atmospheric model? What is the INPUT folder?
+      COMMENT: Does it also contain ``gfs`` files?
 
-#. Edit ``config.base`` in ``$EXPDIR/$PSLOT``. In particular, users will need to modify the following parameters: ACCOUNT, HOMEDIR, STMP, PTMP, HPSSARCH, SDATE, EDATE, and the length of the forecast. 
-
-   ..
-      COMMENT: HOW to update length of forecast??? What variable?
+#. Edit ``config.base`` in ``$EXPDIR/$PSLOT``. In particular, users will need to check/modify the following parameters: ACCOUNT, HOMEDIR, STMP, PTMP, HPSSARCH, SDATE, EDATE, and the number ``384`` in the ``export FHMAX_GFS_##=${FHMAX_GFS_##:-384}`` statements. ``384`` should be adjusted to reflect the length of the forecast experiment. 
 
 #. Run the following to generate a crontab and ``.xml`` files for the experiment in ``$EXPDIR/$PSLOT``:
 
