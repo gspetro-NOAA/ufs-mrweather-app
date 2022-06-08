@@ -32,7 +32,16 @@ Building the UFS Medium-Range Weather Application
 
    .. code-block:: console
       
-      sh build_global-workflow.sh
+      sh build_global-workflow.sh [-a <UFS_app>] [-c <config_file>] [-v] [-h]
+
+   where: 
+      * ``-a``: Builds a specific UFS app instead of the default. Valid values: ``S2SWA`` (default) | ``ATM`` | ``ATMW`` | ``S2S`` | ``S2SW``
+      * ``-c``: Selectively builds based on the provided config file instead of the default config. 
+      * ``-v``: Builds verbose option.
+      * ``-h``: Prints usage and exits.
+
+   Users who run ``sh build_global-workflow.sh`` without any options will build the default option, ``S2SWA``, which stands for *Subseasonal to Seasonal with Wave and Aerosol* capabilities. 
+
 
 Running the UFS Medium-Range Weather Application 
 =========================================================
@@ -71,17 +80,19 @@ Running the UFS Medium-Range Weather Application
 
    .. code-block:: console
    
-      ./setup_expt.py forecast-only --pslot <experiment_name> --idate <YYYYMMDDHH> --edate <YYYYMMDDHH> --resdet <desired_resolution> --gfs_cyc <\#> --comrot <PATH_TO_YOUR_COMROT_DIR> --expdir <PATH_TO_YOUR_EXPDIR>
+      ./setup_expt.py forecast-only --pslot <experiment_name> [--app <valid_app>] --idate <YYYYMMDDHH> --edate <YYYYMMDDHH> --resdet <desired_resolution> --gfs_cyc <\#> --comrot <PATH_TO_YOUR_COMROT_DIR> --expdir <PATH_TO_YOUR_EXPDIR>
+
+   where:
+      * Valid ``app`` values are: ``ATM`` (default) | ``ATMW`` | ``S2S`` | ``S2SW`` | ``S2SWA`` 
+      * Valid ``resdet`` values are: 48, 96, 192, 384, 768
+      * ``--idate`` and ``--edate`` are the *same* and refer to the initial start time of the experiment.
+      * Valid values for ``gfs_cyc`` are: ``0`` (data assimilation only), ``1`` (00z only), ``2`` (00z and 12z), and ``4`` (00z, 06z, 12z, 18z)
 
    For example: 
 
    .. code-block:: console
       
-      ./setup_expt.py forecast-only --pslot test --idate 2020010100 --edate 2020010118 --resdet 384 --gfs_cyc 4 --comrot /home/$USER/COMROT --expdir /home/$USER/uncoupled/EXPDIR
-
-   .. attention::
-
-      ``--idate`` and ``--edate`` must be the *same* when running in :term:`free-forecast` mode and must refer to the initial start time of the experiment. 
+      ./setup_expt.py forecast-only --pslot test --app ATM --idate 2020010100 --edate 2020010100 --resdet 384 --gfs_cyc 1 --comrot /home/$USER/COMROT --expdir /home/$USER/EXPDIR
 
    This will generate ``COMROT`` and ``EXPDIR`` directories. Additionally, it will create a ``$PSLOT`` (specific experiment name) subdirectory within ``COMROT`` and ``EXPDIR`` and a collection of ``config`` files in ``$EXPDIR/$PSLOT``.
 
@@ -91,12 +102,12 @@ Running the UFS Medium-Range Weather Application
       
       cp <ICfile> $COMROT/$PSLOT
    
-   where **<ICfile>** refers to a given IC file (copy an entire directory by adding the ``-r`` argument). These files should be placed within a directory named according to the ``gfs.YYYYMMDDHH`` convention with a filename structure like ``gfs.$YYYYMMDD/HH/atmos/INPUT``. The INPUT folder within ``.../atmos/`` contains ``sfc`` files needed for the Global Forecast System (:term:`GFS`) atmospheric model (:term:`ATM`) to run.
+   where **<ICfile>** refers to a given IC file (copy an entire directory by adding the ``-r`` argument). These files should be placed within a directory named according to the ``gfs.YYYYMMDDHH`` convention with a filename structure like ``gfs.$YYYYMMDD/HH/atmos/INPUT``. The INPUT folder within ``.../atmos/`` contains ``sfc`` files needed for the Global Forecast System (:term:`GFS`) atmospheric model (ATM) to run.
 
    ..
       COMMENT: Does it also contain ``gfs`` files?
 
-#. Edit ``config.base`` in ``$EXPDIR/$PSLOT``. In particular, users will need to check/modify the following parameters: ACCOUNT, HOMEDIR, STMP, PTMP, HPSSARCH, SDATE, EDATE, and the number ``384`` in the ``export FHMAX_GFS_##=${FHMAX_GFS_##:-384}`` statements. ``384`` should be adjusted to reflect the length of the forecast experiment. 
+#. Edit ``config.base`` in ``$EXPDIR/$PSLOT``. In particular, users will need to check/modify the following parameters: ACCOUNT, HOMEDIR, STMP, PTMP, HPSSARCH, SDATE, EDATE, and the number ``384`` in the ``export FHMAX_GFS_##=${FHMAX_GFS_##:-384}`` statement whose ## value corresponds to the start hour of the experiment cycle. ``384`` should be adjusted to reflect the length of the forecast experiment. 
 
 #. Run the following to generate a crontab and ``.xml`` files for the experiment in ``$EXPDIR/$PSLOT``:
 
@@ -131,5 +142,4 @@ Running the UFS Medium-Range Weather Application
    
    ..
       COMMENT: Provide concrete example?
-
 

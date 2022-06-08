@@ -53,7 +53,7 @@ The directory structure on disk for users of the MRW App depends on whether one 
 a pre-configured platform. Users working on pre-configured platforms will only have the
 files associated with the ufs-mrweather-app in their disk space. The directory structure is set
 in configuration file ``Externals.cfg``, which is in the top directory where the umbrella repository
-has been cloned. A listing of the directory structure is shown :ref:`here <top_level_dir_structure>`.
+has been cloned. 
 
 The directory structures for the standalone UFS Weather Model and the UFS Weather Model included with
 the MRW App are equal in that they contain subdirectories for :term:`FMS`, :term:`FV3`, :term:`NEMS`

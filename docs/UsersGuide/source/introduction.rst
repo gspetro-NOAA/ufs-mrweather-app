@@ -278,7 +278,7 @@ provides a centralized location for UFS users and developers to post questions a
    | Common Infrastructure for  | http://esmci.github.io/cime/versions/ufs_release_v1.1/html/index.html           |
    | Modeling the Earth         |                                                                                 |
    +----------------------------+---------------------------------------------------------------------------------+
-   | Unified Post Processor     | https://upp.readthedocs.io/en/ufs-v1.1.0                                        |
+   | Unified Post Processor     | https://upp.readthedocs.io/en/upp_v10.1.0/                                      |
    +----------------------------+---------------------------------------------------------------------------------+
 
 ..

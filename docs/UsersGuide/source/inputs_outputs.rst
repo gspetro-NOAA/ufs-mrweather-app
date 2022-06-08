@@ -35,11 +35,7 @@ UFS Weather Model
 The input files for the UFS Weather Model are located one directory up from the ``chgres_cube``
 input files in ``$RUNDIR`` (see :numref:`Section %s <run_the_case>`). An extensive description
 of the input files for the UFS Weather Model can be found in the `UFS Weather Model Users Guide
-<https://ufs-weather-model.readthedocs.io/en/ufs-v1.1.0>`__.
-
-.. note::
-   Due to renaming/linking by CIME, the file names used in the MRW App
-   differ from the names described in the UFS Weather Model User's Guide.
+<https://ufs-weather-model.readthedocs.io/en/release-public-v3/>`__.
 
 
 UPP Input Files
@@ -52,7 +48,11 @@ Documentation for the UPP input files can be found `here <https://upp.readthedoc
 Output files
 ===============
 
+<<<<<<< HEAD
 The location of the output files written to disk is determined by CIME (see :numref:`Section %s <run_the_case>`).
+=======
+The location of the output files written to disk is determined by CIME.
+>>>>>>> master
 
 
 ``chgres_cube``
@@ -82,6 +82,12 @@ The output files for the UFS Weather Model are described in the `Users Guide
 
 .. _upp_output_files:
 
+<<<<<<< HEAD
+=======
+-----------------
+UPP output files
+-----------------
+>>>>>>> master
 
 UPP Output Files
 ------------------
