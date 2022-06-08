@@ -1,0 +1,3 @@
+[submodule "spack-stack-mod"]
+	path = spack-stack-mod
+	url = git@github.com:NOAA-EMC/spack-stack.git
