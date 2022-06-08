@@ -15,6 +15,7 @@ Welcome to the UFS Medium-Range Weather App Users Guide!
    BuildMRW.rst
    RunMRW.rst
    components.rst
+   install-spack
    repos_and_directories.rst
    inputs_outputs.rst
    graphics.rst
