@@ -1,8 +1,8 @@
 .. _graphics:
 
-===========
+*************
 Graphics
-===========
+*************
 
 .. note::
    Graphics plotting is not a supported feature for the MRW release. The instructins provided here are for informational purposes only. Users may experiment with the scripts at their own risk. 
@@ -92,14 +92,14 @@ After completing the graphics plotting successfully, users may be interested in 
 
 
 
-
+====================================================
 Plot Results from MRW Graduate Student Test (GST)
 ====================================================
 
 
 
 ``plot_mrw_cloud_diff.py``
-------------------------------
+=============================
 
 The ``plot_mrw_cloud_diff.py`` generates plots of cloud cover from the UFS MRW App Graduate Student Test (GST). Users plot a control, experiment, and the difference between the control and the experiment.
 
@@ -119,7 +119,7 @@ Plots are saved in the ``plotting_scripts`` as ``YYYYMMDDHH<variable>_<domain>_f
 
 
 plot_mrw.py
---------------
+==============
 
 This script generates plots of several output variables from the UFS MRW App Graduate Student Test. 
 

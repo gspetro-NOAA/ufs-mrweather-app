@@ -1,8 +1,8 @@
 .. _testing:
   
-=======
+****************
 Testing
-=======
+****************
 
 There are several tests available as part of the regression testing suite to ensure the system is installed correctly and works properly. The regression test also confirms that code upgrades do not have side effects on existing functionalities and ensures that the system still works after code changes are made. The regression test can only be run on Cheyenne, Orion, and Stampede. 
 
@@ -15,8 +15,9 @@ It is the driver behind the automated nightly testing of cime-driven models.
 
 More information about CIME testing can be found on `CIME: Testing <https://esmci.github.io/cime/versions/ufs_release_v1.1/html/users_guide/testing.html>`_.
 
+===================
 Test requirements
-=================
+===================
 
 In order to run the tests, *spack-stack* must be installed. *spack-stack* has been preinstalled on all `Level 1 <https://github.com/ufs-community/ufs-mrweather-app/wiki/Supported-Platforms-and-Compilers-for-MRW-App>` systems but will need to be installed on all other systems.
 
@@ -43,9 +44,9 @@ The input data required for the tests needs to be on disk before the tests are s
     wget https://ftp.emc.ncep.noaa.gov/EIB/UFS/inputdata/201908/20190829/gfs_4_20190829_0000_000.grb2
     ln -s gfs_4_20190829_0000_000.grb2 atm.input.ic.grb2 # Link raw ICs to expected name
 
-
+==================
 Testname syntax
-===============
+==================
 
 Tests are named with the following forms, [ ]=optional::
 
@@ -72,8 +73,9 @@ where:
 - ``COMPILER`` If this value is not supplied, use the default compiler for ``MACHINE``.
 - ``GROUP-TESTMODS`` This is optional. This points to a directory with  ``user_nl_xxx`` files or a ``shell_commands`` that can be used to make namelist and ``XML`` modifications prior to running a test.
 
+===============================
 Query list of supported tests
-=============================
+===============================
 
 **$CIMEROOT/scripts/query_testlists** gathers descriptions of the tests and testlists available
 for UFS, the components, and projects. The available tests for Cheyenne: ::
@@ -130,8 +132,9 @@ The available categories, with the tests they encompass, can be listed by::
 The ``--show-options`` argument does the same, but displays the 'options' defined for the tests,
 such as queue, walltime, etc..
 
+=========================
 Using **create_test** 
-==============================
+=========================
 
 To run a SMS test::
 

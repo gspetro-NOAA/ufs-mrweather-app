@@ -1,5 +1,9 @@
 .. _InstallSpack:
 
+***********************
+Install spack-stack
+***********************
+
 .. include:: ../../../spack-stack-mod/doc/source/Overview.rst
 .. include:: ../../../spack-stack-mod/doc/source/Quickstart.rst
 

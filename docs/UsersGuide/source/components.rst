@@ -1,8 +1,8 @@
 .. _components:
 
-=============
+************************
 Components
-=============
+************************
 
 The MRW Application relies on the global-workflow and its subcomponents, including: 
 
@@ -17,6 +17,7 @@ These components are documented within this User's Guide and supported through a
 
 .. _utils:
 
+=======================================
 Pre-Processor and Initial Conditions
 =======================================
 
@@ -36,6 +37,7 @@ GFS public archives can be accessed through  the `THREDDS Data Server at NCEI <h
 ..
    COMMENT: Check links for paragraph above. 
 
+================
 Forecast Model
 ================
 
@@ -55,6 +57,7 @@ A `User’s Guide for the Use of Stochastic Physics <https://stochastic-physics.
    COMMENT: The paragraph above formerly said: "Two of them are variations of an updated version of the physics :term:`suite` used in the operational GFS v15, while the other two are variations of an experimental suite that includes a subset of the developments for the next version of GFS, GFS v16. The variations pertain to how the sea surface temperature (SST) is initialized and parameterized to evolve, and are chosen depending on the type of initial conditions for the App. Initial conditions in :term:`GRIB2` format have a single two-dimensional field to initialize the SST, which must be kept constant throughout the forecast. Initial conditions in :term:`NEMSIO` or :term:`netCDF` format have two two-dimensional fields that describe the baseline SST and its near-surface perturbation related to the diurnal cycle, enabling the use of the near-sea-surface-temperature (NSST) physical parameterization to forecast the temporal variation in SST due to the diurnal cycle." What, if any, of this should be included? 
    COMMENT: Add more detail on SPP/LSM/SPP?
 
+================================
 Unified Post-Processor (UPP)
 ================================
 
@@ -66,6 +69,7 @@ The UPP output can be used with visualization, plotting and verification package
 
 .. _MetplusComponent:
 
+=============================
 METplus Verification Suite
 =============================
 
@@ -85,7 +89,7 @@ Among other techniques, MET provides the capability to compute standard verifica
 
 METplus is being actively developed by :term:`NCAR`/Research Applications Laboratory (RAL), NOAA/Earth Systems Research Laboratories (ESRL), and NOAA/Environmental Modeling Center (EMC), and it is open to community contributions.
 
-
+=========================
 Visualization Example
 =========================
 
@@ -98,6 +102,7 @@ for the C96 5-day forecasts initialized on 8/29/2019 00 UTC using :term:`GRIB2`,
 ..
    COMMENT: Is this still true?
 
+===========================
 Workflow and Build System
 ===========================
 The MRW App has a user-friendly workflow and a portable build system that
@@ -147,8 +152,10 @@ document and are intended for users to verify the App installation in new
 platforms and to test the integrity of their code in case
 they modify the source code.
 
+===========================================================
 User Support, Documentation, and Contributing Development
 ===========================================================
+
 A `forum-based online support system <https://forums.ufscommunity.org>`__ with topical sections
 provides a centralized location for UFS users and
 developers to post questions and exchange information. The forum complements
@@ -198,8 +205,10 @@ distributed with the MRW App because the former are part of the
 official NOAA policy to accept innovations in its code base, while the latter
 are meant as a sanity check for users.
 
+=================
 Future Direction
-================
+=================
+
 Users can expect to see incremental capabilities in upcoming releases of the
 MRW App to enhance research options and support operational forecast
 implementations. Planned advancements include addition of component models for
@@ -208,8 +217,9 @@ model initialization, and tools for objective forecast verification. Releases
 of other UFS applications, such as the Stand-Alone Regional (SAR) application
 are also forthcoming and will be announced through the UFS Forum and the UFS Portal.
 
+==========================
 How To Use This Document
-========================
+==========================
 
 This User's Guide instructs both novice and experienced users on downloading,
 building and running the MRW Application.

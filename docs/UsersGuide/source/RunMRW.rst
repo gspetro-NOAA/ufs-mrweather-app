@@ -1,8 +1,8 @@
 .. _run-mrw:
 
-===========================================================
+************************************************
 Run the Medium-Range Weather (MRW) Application 
-===========================================================
+************************************************
 
 .. attention::
 
@@ -30,6 +30,7 @@ The steps required for generating an experiment are as follows:
 
 .. _get-data:
 
+===============================
 Download and Stage the Data
 ===============================
 
@@ -45,6 +46,7 @@ The MRW App requires input files to run. These include static datasets, initial 
 
 .. _uncoupled-mode:
 
+=============================
 Running in Uncoupled Mode
 =============================
 
@@ -54,6 +56,7 @@ Running in Uncoupled Mode
 
 .. _coupled-mode:
 
+==========================
 Running in Coupled Mode
 ==========================
 

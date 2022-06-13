@@ -1,8 +1,8 @@
 .. _build-mrw:
 
-===========================================================
+***************************************************
 Build the Medium-Range Weather (MRW) Application 
-===========================================================
+***************************************************
 
 The Unified Forecast System (:term:`UFS`) Medium-Range Weather (MRW) Application is an :term:`umbrella repository` consisting of a number of different :ref:`components <Components>` housed in external repositories. Once the MRW App is configured and built, users can generate predictions of atmospheric behavior out to about two weeks. 
 
@@ -39,6 +39,7 @@ The steps required for building the MRW App are as follows:
 
 .. _spack-stack-info:
 
+=======================
 Install *spack-stack*
 =======================
 
@@ -48,18 +49,19 @@ Install *spack-stack*
 **Definition:** :term:`spack-stack` is a repository that provides a Spack-based method for building the software stack required to run numerical weather prediction (NWP) tools such as the MRW App and other UFS applications. *spack-stack* uses the Spack package manager along with custom Spack configuration files and Python scripts to simplify installation of the libraries required to run various applications. 
 
 Background
-----------------
+==============
 
 The UFS Weather Model draws on over 50 code libraries to run its applications, including the MRW Application. These libraries range from libraries developed in-house at NOAA (e.g., NCEPLIBS, FMS) to libraries developed by NOAA's partners (e.g., PIO, ESMF) to truly third party libraries (e.g., NETCDF). Individual installation of these libraries is not practical, so the `spack-stack <https://github.com/NOAA-EMC/spack-stack>`__ was developed as a central installation system to ensure that the infrastructure environment across multiple platforms is as similar as possible. Installation of the *spack-stack* is required to run the MRW App. 
 
 Instructions
--------------------------
+===============
 Users working on systems that fall under `Support Levels 2-4 <https://github.com/ufs-community/ufs-mrweather-app/wiki/Supported-Platforms-and-Compilers-for-MRW-App>`__ will need to install *spack-stack* the first time they try to build applications (such as the MRW App) that depend on it. Users can either build the *spack-stack* on their local system or use the centrally maintained stacks on each HPC platform if they are working on a Level 1 system. For a detailed description of installation options, see *:ref:`Installing spack-stack <InstallBuildSpackStack>`*. 
 
 After completing installation, continue to the next section.
 
 .. _DownloadMRWApp:
 
+========================================
 Download the UFS MRW Application Code
 ========================================
 
@@ -109,6 +111,7 @@ The cloned repository contains the configuration files and sub-directories shown
 
 .. _checkout-externals:
 
+================================
 Check Out External Components
 ================================
 
@@ -131,6 +134,7 @@ Determine whether checkout of externals was successful using:
 
 .. _setenv-build:
 
+===================================================
 Set Up the Environment and Build the Executables
 ===================================================
 

@@ -1,11 +1,12 @@
 .. _faq:
 
-===
+******
 FAQ
-===
+******
 
+==============================================
 How can I set required environment variables?
-=============================================
+==============================================
 The best practice is to set environment variables (``UFS_SCRATCH``, ``UFS_INPUT``,
 ``UFS_DRIVER``, ``CIME_MODEL``, and ``PROJECT``) in the user's enviroment. Some systems
 (in particular Stampede2) require to export them in the ``.bashrc`` (Bash shell) or
@@ -36,8 +37,9 @@ shell script (``setenv_nceplibs.sh|.csh``) must be sourced in the same way.
     setenv CIME_MODEL ufs
     source /path/to/nceplibs/bin/setenv_nceplibs.csh
 
+==============================================
 How can I see/check the steps in my workflow?
-=============================================
+==============================================
 
 A good way to see what ``case.submit`` will do, is to use the ``preview_run`` command,
 which will output the environment for your run along with the batch submit and mpirun commands.
@@ -47,8 +49,9 @@ which will output the environment for your run along with the batch submit and m
     cd $CASEROOT
     ./preview_run
 
+============================================================
 How can I run an individual task in the existing workflow?
-==========================================================
+============================================================
 
 The CIME allows you to run a specific task in the workflow by supplying the ``--only-job``
 parameter to the ``case.submit`` command.
@@ -79,8 +82,9 @@ If the user wants to define the first job submitted in a workflow, the ``--job``
 
 In this case, two dependent jobs will be submitted: model simulation and post-processing.
 
+====================================================================================
 How can I change the wall clock time and queue for specific tasks in the workflow?
-==================================================================================
+====================================================================================
 
 These can be done by using the ``xmlchange`` command.
 
@@ -103,14 +107,16 @@ The following command will change the job queue to ``bigmem`` for ``chgres_cube`
     Without the ``--subgroup`` option, the ``xmlchange`` command changes the job wall clock time for all
     submitted jobs.
 
+=========================================================================
 What should the wall clock time be for a C768 24-hour forecast on Gaea?
-=======================================================================
+=========================================================================
 
 For this run you should set the ``JOB_WALLCLOCK_TIME`` to one hour. For instructions
 on how to do that, see the FAQ above.
 
+=======================================================================
 How can I change the project account that will be used to submit jobs?
-======================================================================
+=======================================================================
 
 There are two ways to change project account that is used to submit job:
 
@@ -127,9 +133,9 @@ There are two ways to change project account that is used to submit job:
 
    A PROJECT environment variable setting will take precident over the case XML setting.
 
-
+=================================================================
 How do I change the processor layout for the UFS Weather Model?
-===============================================================
+=================================================================
 
 The total number of processor used by the UFS Weather Model can be modified by using ``xmlchange`` command and editing the ``user_nl_ufsatm`` file.
 
@@ -180,8 +186,9 @@ to have consistent model configuration with **NTASKS_ATM** defined above. ``user
 
     The model resolution also needs to divide evenly with the layout pair. For the given configuration (C96 resolution), :math:`96/3 = 32` and :math:`96/8 = 12`.
 
+==============================================
 How do I change the number of OPENMP threads?
-=============================================
+==============================================
 
 The user may need to change the number of threads to reduce memory consumption for each compute node. This is
 especially true for high-resolution cases, and is already set by CIME for C768. This can be done
@@ -200,8 +207,9 @@ using the following command:
     The model needs to be built again if threading is changed from 1. Setting **NTHRDS_ATM** does not require changes in the model
     configuration files. The job submission scripts handle it automatically and submit jobs using more compute nodes.
 
+============================
 How do I restart the model?
-===========================
+============================
 
 To restart the model the ``xmlchange`` command can be used:
 
@@ -254,8 +262,9 @@ and restart the model for 24 hours simulation:
 
 The model outputs always start from 000 (e.g.,  sfcf000.nc, atmf000.nc), and don't depend on the model start time and method (warm or cold start).
 
+=================================================================
 How do I change a namelist option for chgres_cube or the model?
-===============================================================
+=================================================================
 From the case directory running ``./preview_namelists`` will generate the namelists for the run.  This is normally run by ``case.submit``, but you can also run it from the command line after running the command ``case.setup``.   Run it once before editing ``user_nl_ufsatm`` and examine ``input.nml`` to see the default value, then edit ``user_nl_ufsatm`` and run it again to see the change.
 
 Typical usage of ``preview_namelists`` is simply:
@@ -359,8 +368,9 @@ The changes are required to ensure consistency between the model configuration a
     - regional@chgres
     - regional@fv_core_nml
 
+======================================
 How do I turn on stochastic physics?
-====================================
+======================================
 
 There are three types of stochastic physics supported with this release: SPPT, SHUM, and SKEB.
 They can be used together or separately, and their use is controlled by setting model namelist options
@@ -375,13 +385,15 @@ In order to set variables DO_SPPT, DO_SHUM, DO_SKEB to true in the model namelis
 as well as to set the values of the variables that customize the stochastic physics,
 please see  FAQ entry `How do I change a namelist option for chgres_cube or the model?`
 
+=================================
 Can I customize the UPP output?
-===============================
+=================================
 
 Starting with v1.1.0, you may customize your output following the instructions in  :numref:`Section %s <upp_output_files>`.
 
+==============================================================================
 How do I find out which platforms are preconfigured for the MR Weather App?
-===========================================================================
+==============================================================================
 
 Preconfigured machines are platforms that have machine specific files and settings scripts and should
 run the MR Weather Application **out-of-the-box** (other than potentially needing to download input files).
@@ -407,8 +419,9 @@ The output will contain entries like the following:
 
 .. _faq-physics-compsets:
 
+=====================================================================
 What are the compsets and physics suites supported in this release?
-====================================================================
+=====================================================================
 
 There are two :term:`compsets` supported in this release: GFSv15p2 and GFSv16beta,
 corresponding to the physics suites associated with the operational GFS v15 model
@@ -426,9 +439,9 @@ suites are used. When NEMSIO or netCDF format is chosen, the suites with NSST ar
 These differences are needed because the GRIB2 files do not have all the fields
 needed to initialize the operational NSST parameterization.
 
-
+=========================================================================
 How can I change number of task used by chgres_cube or UPP (NCEP-Post)?
-=======================================================================
+=========================================================================
 
 By default, CIME automatically sets number of tasks used by ``chgres_cube`` and NCEP-Post (:term:`UPP`) based on the
 resolution of the created case using following logic:
@@ -463,6 +476,7 @@ To change the values set automatically by CIME-CSS, the ``xmlchange`` command ca
 This command will change the number of tasks used by chgres_cube to 72. If the user wants to change the number of
 task for NCEP-Post, the subgroup option needs to set to ``case.gfs_post``.
 
+==========================================================================================
 How can I run the MR Weather App for another date without overriding my previous run?
 ==========================================================================================
 
@@ -476,22 +490,25 @@ From the case directory do:
    RUNDIR = ` ./xmlquery RUNDIR --value`
    mv $RUNDIR $RUNDIR.forecastdate
 
+=========================================================
 How do I diagnose a failure with a high-resolution run?
-=======================================================
+=========================================================
 
 One possible source of failure with high-resolution runs is lack of memory. To
 diagnose if this is the problem, try a low resolution run first.
 
+====================================================
 How can I diagnose errors when building the model?
-==================================================
+====================================================
 
 If the ``./case.build`` step fails, the first step is to inspect the build logs
 in the case build directories. These files are called ``ufs.bldlog.YYMMDD-HHMMSS``
 and ``atm.bldlog.YYMMDD-HHMMSS``, and may be compressed using ``gzip``. In this case,
 unzip them using ``gunzip``.
 
+============================================================================================
 How can I fix cmake build errors of type: This is now an error according to policy CMP0004
-==========================================================================================
+============================================================================================
 
 If the model build fails with an error message like:
 

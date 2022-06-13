@@ -1,14 +1,15 @@
 .. _inputs_and_outputs:
 
-======================
+************************
 Inputs and Outputs
-======================
+************************
 
 This chapter provides an overview of the input and output files needed by the components
 of the UFS MRW Application. Links to more detailed documentation for each of the components (e.g., :term:`chgres_cube`, the UFS :term:`Weather Model`, and :term:`UPP`) are provided in the sections below. For MRW App users who want to jump straight to downloading and staging the files, see :numref:`Section %s <downloading_input_data>`. 
 
 .. _input:
 
+===============
 Input Files
 ===============
 
@@ -20,7 +21,7 @@ The MRW Application requires numerous input files to run: static datasets (fix f
 Users must download the input files if they are not working on a Level 1 system. 
 
 ``chgres_cube``
-------------------
+==================
 
 When a user runs the MRW App as described in the :ref:`Quick Start Guide <quickstart>`, input data for
 ``chgres_cube`` is linked from a location on disk to the user's run directory via CIME. The data
@@ -30,7 +31,7 @@ can be found `here <https://ufs-utils.readthedocs.io/en/latest/chgres_cube.html#
 
 
 UFS Weather Model
---------------------
+=====================
 
 The input files for the UFS Weather Model are located one directory up from the ``chgres_cube``
 input files in ``$RUNDIR`` (see :numref:`Section %s <run_the_case>`). An extensive description
@@ -39,24 +40,21 @@ of the input files for the UFS Weather Model can be found in the `UFS Weather Mo
 
 
 UPP Input Files
-------------------
+===================
 
 Documentation for the UPP input files can be found `here <https://upp.readthedocs.io/en/ufs-v1.1.0/InputsOutputs.html>`__.
 
 .. _output:
 
+===============
 Output files
 ===============
 
-<<<<<<< HEAD
-The location of the output files written to disk is determined by CIME (see :numref:`Section %s <run_the_case>`).
-=======
 The location of the output files written to disk is determined by CIME.
->>>>>>> master
 
 
 ``chgres_cube``
--------------------
+==================
 
 The files output by ``chgres_cube`` reside in the ``$DIN_LOC_IC`` directory, and are linked by CIME to
 files that include the grid name and date in the same directory.  For example:
@@ -75,22 +73,16 @@ These output files are used as input for the UFS Weather Model.
 
 
 UFS Weather Model
--------------------
+====================
 
 The output files for the UFS Weather Model are described in the `Users Guide
 <https://ufs-weather-model.readthedocs.io/en/ufs-v1.1.0/InputsOutputs.html>`__.
 
 .. _upp_output_files:
 
-<<<<<<< HEAD
-=======
------------------
-UPP output files
------------------
->>>>>>> master
 
 UPP Output Files
-------------------
+===================
 
 Documentation for the UPP output files can be found `here <https://upp.readthedocs.io/en/ufs-v1.1.0/InputsOutputs.html>`__.
 
@@ -104,6 +96,7 @@ You may then setup/build/run your case as usual and the UPP will use the new fla
 
 .. _downloading_input_data:
 
+======================================
 Downloading and Staging Input Data
 ======================================
 
@@ -123,7 +116,7 @@ Users can customize ``$DIN_LOC_IC`` after creating the case using the commands b
 
 
 Static files
----------------
+================
 
 The user does not need to stage the fix files manually because CIME retrieves
 the fix files from ``$DIN_LOC_ROOT`` (if available) or from a
@@ -132,7 +125,7 @@ the files from the ftp site, it places them in ``$DIN_LOC_ROOT``.
 
 
 Initial Condition Formats and Source
-----------------------------------------
+========================================
 
 The MRW App currently only supports the use of Global Forecast System
 (GFS) data as raw initial conditions (that is, MRF, AVN, ERA5 etc. are not supported).
@@ -166,7 +159,7 @@ The GFS data can be provided in three formats: :term:`NEMSIO`, :term:`netCDF`, o
 
 
 Initial condition naming convention
--------------------------------------
+=======================================
 
 The default naming convention for the initial condition files is described below. The user must stage the files on disk following this convention so they can be recognized by the MRW App workflow.
 
@@ -186,7 +179,7 @@ The default naming convention for the initial condition files is described below
 
 
 Default Initial Conditions
-----------------------------
+=============================
 
 All supported CompSets use the Hurricane Dorian initialization of 08-29-2019.
 In preconfigured platforms, the 08-29-2019 initial conditions are pre-staged in
@@ -197,7 +190,7 @@ on the `FTP data repository <https://ftp.emc.ncep.noaa.gov/EIB/UFS/inputdata/201
 
 
 Running the App for Different Dates
--------------------------------------
+======================================
 
 If users want to run the MRW App for dates other than 08-29-2019, they need to make a change in the case to specify the desired data. This is done by setting the ``RUN_STARTDATE`` and ``START_TOD`` CIME options using ``./xmlchange``.
 
@@ -207,7 +200,7 @@ Starting with the v1.1.0 release, the MRW App workflow no longer auto-downloads 
 
 
 Staging Initial Conditions Manually
-------------------------------------------------
+======================================
 
 If users want to run the MRW App with initial conditions other than
 what is currently available in preconfigured platforms, they need to stage the data manually.
@@ -297,13 +290,13 @@ The data should be placed in ``$DIN_LOC_IC``.
 
 
 Order of Operations
----------------------
+=======================
 
 If you want to download the input data manually, you should do it before you build the MRW App.
 
 
 Coexistence of Multiple Files for the Same Date
--------------------------------------------------
+==================================================
 
 Directory `$DIN_LOC_IC/YYMMMM/YYYYMMDD` can have GRIB2, NEMSIO, and netCDF files for
 a given initialization hour and can have files for multiple initialization hours
@@ -321,7 +314,7 @@ and add
 
 
 Best Practices for Conserving Disk Space and Keeping Files Safe
------------------------------------------------------------------
+===================================================================
 
 Initial condition files are large and can occupy a significant amount of disk space.
 If various users will employ a common file system to conduct runs, it is

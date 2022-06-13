@@ -1,8 +1,8 @@
 .. _introduction:
 
-=============
+****************
 Introduction
-=============
+****************
 
 The Unified Forecast System (:term:`UFS`) is a community-based, coupled, comprehensive Earth modeling system. NOAA’s operational model suite for numerical weather prediction (NWP) is quickly transitioning to the UFS from a number of different modeling systems. The UFS enables research, development, and contribution opportunities within the broader :term:`weather enterprise` (e.g. government, industry, and academia). For more information about the UFS, visit the `UFS Portal <https://ufscommunity.org/>`__.
 
@@ -18,8 +18,9 @@ The MRW App is `available on GitHub <https://github.com/ufs-community/ufs-mrweat
    COMMENT: Is the "future work" section accurate?
    COMMENT: Add v2.0.0 wiki page!
 
+===========================
 How to Use This Document
-========================
+===========================
 
 This guide instructs both novice and experienced users on downloading, building, and running the MRW Application. Please post questions in the `UFS Forum <https://forums.ufscommunity.org/>`__.
 
@@ -50,11 +51,12 @@ File paths or code that include angle brackets (e.g., ``build_<platform>_<compil
 
 .. _MRWPrerequisites:
 
+===============================================
 Prerequisites for Using the MRW Application
 ===============================================
 
 Background Knowledge Prerequisites
---------------------------------------
+=====================================
 
 The instructions in this documentation assume that users have certain background knowledge: 
 
@@ -79,7 +81,7 @@ Additional background knowledge in the following areas could be helpful:
 
 
 Software/Operating System Requirements
------------------------------------------
+=========================================
 The UFS MRW Application has been designed so that any sufficiently up-to-date machine with a UNIX-based operating system should be capable of running the application. NOAA `Level 1 & 2 systems <https://github.com/ufs-community/ufs-mrweather-app/wiki/Supported-Platforms-and-Compilers-for-MRW-App>`__ already have these prerequisites installed. However, users working on other systems must ensure that the following requirements are installed on their system: 
 
 **Minimum Platform Requirements:**
@@ -168,11 +170,12 @@ You are now ready to build the MRW App as documented in the :ref:`quickstart`.
 
 .. _components-overview:
 
+==============================
 MRW App Components Overview 
 ==============================
 
 Pre-Processor Utilities and Initial Conditions
-------------------------------------------------
+=================================================
 
 The MRW App requires input model data and the :term:`chgres_cube` pre-processing software, which is part of the `UFS_UTILS <https://github.com/ufs-community/UFS_UTILS>`__ pre-processing utilities package, to initialize and prepare the model. Additional information about the pre-processor utilities can be found in :numref:`Chapter %s <utils>` and in the `UFS_UTILS User’s Guide <https://noaa-emcufs-utils.readthedocs.io/en/ufs-v2.0.0/>`__.
 
@@ -180,15 +183,15 @@ The MRW App requires input model data and the :term:`chgres_cube` pre-processing
    COMMENT: Check links for paragraph above. 
 
 Forecast Model
---------------------
+==================
 
 Atmospheric Model
-^^^^^^^^^^^^^^^^^^^^^^
+--------------------
 The prognostic atmospheric model in the UFS MRW Application uses the Finite-Volume Cubed-Sphere
 (:term:`FV3`) dynamical core. The dynamical core is the computational part of a model that solves the equations of fluid motion for the atmospheric component of the UFS Weather Model. A User’s Guide for the UFS :term:`Weather Model` can be found `here <https://ufs-weather-model.readthedocs.io/en/ufs-v2.0.0/>`__. Additional information about the FV3 dynamical core is available at `here <https://noaa-emc.github.io/FV3_Dycore_ufs-v1.1.0/html/index.html>`__.
 
 Common Community Physics Package
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------
 
 The `Common Community Physics Package <https://dtcenter.org/community-code/common-community-physics-package-ccpp>`_ (:term:`CCPP`) supports interoperable atmospheric physics and land surface model options. Atmospheric physics are a set of numerical methods describing small-scale processes such as clouds, turbulence, radiation, and their interactions. The upcoming MRW App release includes four physics suites and :term:`stochastic<Stochastic physics>` options to represent model uncertainty. 
 
@@ -196,19 +199,19 @@ The `Common Community Physics Package <https://dtcenter.org/community-code/commo
    COMMENT: It seems like all but the GFS v16 are designed only for high resolution grids... so why are we including them with this release? It seems like GFS v16 would be more appropriate for the MRW App.
 
 Unified Post-Processor
--------------------------
+=========================
 
 The Medium-Range Weather (MRW) Application is distributed with a post-processing tool, the `Unified Post Processor <https://dtcenter.org/community-code/unified-post-processor-upp>`__ (:term:`UPP`). The UPP converts the native netCDF output from the model to :term:`GRIB2` format on standard isobaric coordinates in the vertical direction. The UPP can also be used to compute a variety of useful diagnostic fields, as described in the `UPP User’s Guide <https://upp.readthedocs.io/en/upp-v9.0.0/>`__. The UPP output can be used with visualization, plotting and verification packages, or for further downstream post-processing (e.g., statistical post-processing techniques).
 
 .. _Metplus:
 
 METplus Verification Suite
-------------------------------
+=============================
 
 The Model Evaluation Tools (MET) package is a set of statistical verification tools developed by the `Developmental Testbed Center <https://dtcenter.org/>`__ (DTC) for use by the :term:`NWP` community to help them assess and evaluate the performance of numerical weather predictions. MET is the core component of the enhanced METplus verification framework. The suite also includes the associated database and display systems called METviewer and METexpress. METplus spans a wide range of temporal and spatial scales. It is intended to be extensible through additional capabilities developed by the community. More details about METplus can be found in :numref:`Chapter %s <MetplusComponent>` and on the `METplus website <https://dtcenter.org/community-code/metplus>`__.
 
 Visualization Example
---------------------------
+=======================
 
 This release does not include support for model visualization. Four basic NCAR Command Language (:term:`NCL`) scripts are provided to create a basic visualization of model output, but this capability is provided only as an example for users familiar with NCL. The scripts may be used to complete a visual check to verify that the application is producing reasonable results.
 
@@ -216,7 +219,7 @@ This release does not include support for model visualization. Four basic NCAR C
    COMMENT: Is this still true?
 
 Workflow and Build System
-------------------------------
+===========================
 
 The MRW Application has a portable CMake-based build system that packages together all the components required to build the MRW Application. Once built, users can generate a Rocoto-based workflow that will run each task in the proper sequence (see `Rocoto documentation <https://github.com/christopherwharrop/rocoto/wiki/Documentation>`__ for more on workflow management). 
 
@@ -230,18 +233,19 @@ This MRW Application release has been tested on a variety of platforms widely us
 
 .. _MRWStructure:
 
+===========================================
 Code Repositories and Directory Structure
-=========================================
+===========================================
 
 .. _hierarchical-repo-str:
 
 Hierarchical Repository Structure
------------------------------------
+=====================================
 
 ..
    COMMENT: Update this from code repos dirs doc!
 
-
+===========================================================
 User Support, Documentation, and Contributing Development
 ===========================================================
 A `forum-based online support system <https://forums.ufscommunity.org>`__ with topical sections
@@ -292,8 +296,9 @@ are meant as a sanity check for users.
 ..
    COMMENT: Revise this to better reflect WE2E test purposes. 
 
+=================
 Future Direction
-================
+=================
 Users can expect to see incremental improvements and additional capabilities in upcoming releases of the MRW Application to enhance research opportunities and support operational forecast implementations. 
 
 Planned advancements include addition of: 

@@ -11,7 +11,7 @@ Welcome to the UFS Medium-Range Weather App Users Guide!
    :maxdepth: 3
 
    introduction.rst
-   quickstart.rst
+   quickstart-guide.rst
    BuildMRW.rst
    RunMRW.rst
    components.rst

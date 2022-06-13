@@ -1,14 +1,15 @@
 .. _repos_and_directories:
 
-=========================================
+************************************************
 Code repositories and directory structure
-=========================================
+************************************************
 
 This chapter describes the code repositories that comprise the MRW App,
 without describing, in detail, any of the components.
 
+==============================================
 Hierarchical Repository Structure
----------------------------------
+==============================================
 
 The :term:`umbrella repository` for the MRW Application is named ``ufs-mrweather-app`` and is available on GitHub at https://github.com/ufs-community/ufs-mrweather-app. An umbrella repository is a repository that includes links, called *externals*, to additional repositories. The MRW App includes the ``checkout_externals`` tools along with a configuration file called ``Externals.cfg``, which describes the external repositories associated with the MRW App umbrella repository (see :numref:`Table %s <top_level_repos>`).
 
@@ -47,7 +48,7 @@ Note that the prerequisite libraries (including NCEP Libraries and external libr
 .. _TopLevelDirStructure:
 
 Directory Structure
--------------------
+=======================
 
 The directory structure on disk for users of the MRW App depends on whether one is using
 a pre-configured platform. Users working on pre-configured platforms will only have the
@@ -119,7 +120,8 @@ The ``ufs-mrweather-app`` :term:`umbrella repository` structure is determined by
    COMMENT: Update directory tree above to reflect MRW, not SRW!!!
 
 Global Workflow Sub-Directories
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------
+
 A number of sub-directories are created under the ``global-workflow`` directory when the global workflow is cloned (see directory diagram :ref:`above <TopLevelDirStructure>`). :numref:`Table %s <Subdirectories>` describes the contents of these sub-directories. 
 
 .. _Subdirectories:
@@ -149,7 +151,8 @@ A number of sub-directories are created under the ``global-workflow`` directory 
 .. _ExperimentDirSection:
 
 Experiment Directory Structure
---------------------------------
+==================================
+
 When the user generates an experiment (:numref:`Step %s <expt-gen>`), a user-defined experimental directory (``EXPTDIR``) is created based on information specified in the ``config.sh`` file. :numref:`Table %s <ExptDirStructure>` shows the contents of the experiment directory before running the experiment workflow.
 
 ..
