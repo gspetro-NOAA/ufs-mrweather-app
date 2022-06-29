@@ -310,5 +310,11 @@ Planned advancements include addition of:
 ..
    COMMENT: Are these up-to-date/accurate? Are any other enhancements in the works for future MRW releases? That GO-CART thing, for example?
 
+:ref:`TOC <spack-stack:toctree>`
+:external:ref:`Spack Stack Documentation <Overview>`
+:external:doc:`Spack Stack Docs <spack-stack:index>`
+
+
 .. bibliography:: references.bib
 
+.. _spack-stack: https://spack-stack.readthedocs.io/en/latest/

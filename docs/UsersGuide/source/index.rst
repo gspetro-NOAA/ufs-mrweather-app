@@ -15,10 +15,15 @@ Welcome to the UFS Medium-Range Weather App Users Guide!
    BuildMRW.rst
    RunMRW.rst
    components.rst
-   install-spack
+   :ref:spack-stack+ref`spack-stack <spack-stack>`
+   :ref:`spack-stack:toctree`
+   :external:ref:`Spack Stack Docs <Overview>`
+   :doc:`Spack Stack Documentation <spack-stack:doc/source/index>`
    repos_and_directories.rst
    inputs_outputs.rst
    graphics.rst
    testing.rst
    faq.rst
    glossary
+
+.. _spack-stack: https://spack-stack.readthedocs.io/en/latest/

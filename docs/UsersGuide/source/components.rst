@@ -9,9 +9,9 @@ The MRW Application relies on the global-workflow and its subcomponents, includi
 * Pre-Processor Utilities & Initial Conditions
 * :term:`UFS` :term:`Weather Model`
 * Unified Post-Processor (:term:`UPP`)
-* Build System and Workflow
+* Build System and Workflow (global-workflow)
 * METplus Verification Suite (optional)
-* Visualization Examples
+* Visualization Examples (optional)
 
 These components are documented within this User's Guide and supported through a `community forum <https://forums.ufscommunity.org/>`_. 
 
@@ -21,10 +21,11 @@ These components are documented within this User's Guide and supported through a
 Pre-Processor and Initial Conditions
 =======================================
 
-The MRW App includes the :term:`chgres_cube` pre-processing software, which is part of the `UFS_UTILS <https://github.com/ufs-community/UFS_UTILS>`__ pre-processing utilities package. ``chgres_cube`` converts the Global Forecast System (GFS) analyses to the format needed by the :term:`Weather Model`. Additional information about ``chgres_cube`` can be found in the `UFS_UTILS User’s Guide <https://ufs-utils.readthedocs.io/en/ufs-v1.1.0/>`__.
+The MRW App includes the :term:`chgres_cube` pre-processing software, which is part of the `UFS_UTILS <https://github.com/ufs-community/UFS_UTILS>`__ pre-processing utilities package. ``chgres_cube`` converts the Global Forecast System (GFS) analyses to the format needed by the :term:`Weather Model`. Additional information about ``chgres_cube`` can be found in the `UFS_UTILS User’s Guide <https://ufs-utils.readthedocs.io/en/latest/>`__.
 
 ..
-   COMMENT: Update UFS_UTILS link.
+   COMMENT: Update UFS_UTILS link. Should the link go to chgres_cube docs only, or to all of UFS_UTILS?
+   COMMENT: What exactly is a GFS analysis?
 
 GFS analyses for initializing the MRW App can be in one of three formats:
 
